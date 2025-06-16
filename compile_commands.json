@@ -1,0 +1,21 @@
+[
+ {
+  "directory": "/home/fde-alme/Documents/42-libft_mlx_base",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft/include",
+   "-I/usr/include",
+   "-Imlx",
+   "-c",
+   "src/main.c",
+   "-o",
+   "build/main.o"
+  ],
+  "file": "src/main.c"
+ }
+]
