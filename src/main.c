@@ -2,6 +2,9 @@
 #include "mlx.h"
 #include "mlx_int.h"
 
+#define WIDTH 800
+#define HEIGHT 800
+
 typedef struct s_vars
 {
 	t_xvar		*mlx;
@@ -24,6 +27,32 @@ int	on_key_press(int key_code, t_vars *vars)
 	return (0);
 }
 
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+}
+
+void	squares_img(t_data *img)
+{
+	int	x;
+	int y;
+
+	y = 100;
+	while (y < HEIGHT)
+	{
+		x = 100;
+		while (x < WIDTH)
+		{
+			my_mlx_pixel_put(img, x, y, 0xFF0000);
+			x++;
+		}
+		y++;
+	}
+}
+
 int	main(void)
 {
 	t_vars	vars;
@@ -33,16 +62,18 @@ int	main(void)
 	if (!vars.mlx)
 		return (1);
 
-	img.img = mlx_new_image(vars.mlx, 800, 800);
+	img.img = mlx_new_image(vars.mlx, HEIGHT, WIDTH);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, 
 							  &img.line_length, &img.endian);
-	vars.win = mlx_new_window(vars.mlx, 800, 800, "My window");
+	vars.win = mlx_new_window(vars.mlx, HEIGHT, WIDTH, "My window");
 	if (!vars.win)
 	{
 		mlx_destroy_display(vars.win);
 		free(vars.win);
 		return (1);
 	}
+	squares_img(&img);
+	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
 	mlx_key_hook(vars.win, on_key_press, &vars);
 	mlx_loop(vars.mlx);
 	mlx_destroy_window(vars.mlx, vars.win);
