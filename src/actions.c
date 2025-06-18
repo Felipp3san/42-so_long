@@ -12,19 +12,26 @@
 
 #include "so_long.h"
 
-void	handle_interaction(t_map *map, t_player *player, t_point *next, t_point *previous)
+void	handle_interaction(t_game *game, t_point *next, t_point *previous)
 {
-	if (map->map[next->row][next->column] == 'E' && map->door_state == CLOSED_DOOR)
+	t_map		*map;
+	t_player	*player;
+	char		*next_tile;
+
+	map = &game->map;
+	player = &game->player;
+	next_tile = &map->map[next->row][next->column];
+	if (*next_tile == 'E' && map->door_state == CLOSED)
 		return ;
-	if (map->map[next->row][next->column] == 'X' && player->lives > 0)
+	if (*next_tile == 'X' && player->lives > 0)
 		player->lives--;
-	if (map->map[next->row][next->column] == 'C')
+	if (*next_tile == 'C')
 	{
 		player->collectables++; 
 		if (player->collectables == map->collectables)
-			map->door_state = OPEN_DOOR;
+			map->door_state = OPEN;
 	}
-	map->map[next->row][next->column] = 'P';
+	*next_tile = 'P';
 	map->map[previous->row][previous->column] = '0';
 	map->redraw = 1;
 	player->move_count++;
@@ -32,55 +39,71 @@ void	handle_interaction(t_map *map, t_player *player, t_point *next, t_point *pr
 	player->location.column = next->column; 
 }
 
-void	move_up(t_map *map, t_player *player)
+void	move_up(t_game *game)
 {
-	t_point	next;
-	t_point	previous;
+	t_player	*player;
+	t_map		*map;
+	t_point		next;
+	t_point		previous;
 
+	map = &game->map;
+	player = &game->player;
 	previous.row = player->location.row;
 	previous.column = player->location.column;
 	next.row = previous.row - 1;
 	next.column = previous.column;
 	if (map->map[next.row] && map->map[next.row][next.column] != '1') 
-		handle_interaction(map, player, &next, &previous);
+		handle_interaction(game, &next, &previous);
 }
 
-void	move_down(t_map *map, t_player *player)
+void	move_down(t_game *game)
 {
-	t_point	next;
-	t_point	previous;
+	t_player	*player;
+	t_map		*map;
+	t_point		next;
+	t_point		previous;
 
+	map = &game->map;
+	player = &game->player;
 	previous.row = player->location.row;
 	previous.column = player->location.column;
 	next.row = previous.row + 1;
 	next.column = previous.column;
 	if (map->map[next.row] && map->map[next.row][next.column] != '1') 
-		handle_interaction(map, player, &next, &previous);
+		handle_interaction(game, &next, &previous);
 }
 
-void	move_left(t_map *map, t_player *player)
+void	move_left(t_game *game)
 {
-	t_point	next;
-	t_point	previous;
+	t_player	*player;
+	t_map		*map;
+	t_point		next;
+	t_point		previous;
 
+	map = &game->map;
+	player = &game->player;
 	previous.row = player->location.row;
 	previous.column = player->location.column;
 	next.row = previous.row;
 	next.column = previous.column - 1;
 	if (map->map[next.row] && map->map[next.row][next.column] != '1') 
-		handle_interaction(map, player, &next, &previous);
+		handle_interaction(game, &next, &previous);
 }
 
-void	move_right(t_map *map, t_player *player)
+void	move_right(t_game *game)
 {
-	t_point	next;
-	t_point	previous;
+	t_player	*player;
+	t_map		*map;
+	t_point		next;
+	t_point		previous;
 
+	map = &game->map;
+	player = &game->player;
 	previous.row = player->location.row;
 	previous.column = player->location.column;
 	next.row = previous.row;
 	next.column = previous.column + 1;
 	if (map->map[next.row] && map->map[next.row][next.column] != '1') 
-		handle_interaction(map, player, &next, &previous);
+		handle_interaction(game, &next, &previous);
 }
 

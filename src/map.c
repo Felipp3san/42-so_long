@@ -77,7 +77,7 @@ void	get_map_info(t_map *map, char *map_name)
 	map->columns = 0;
 	map->redraw = 1;
 	map->collectables = 0;
-	map->door_state = CLOSED_DOOR;
+	map->door_state = CLOSED;
 	map->fd = open_map(map->name);
 	line = get_next_line(map->fd);
 	while (line)

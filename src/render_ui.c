@@ -14,21 +14,19 @@
 
 void	draw_hearts(t_game *game)
 {
-	t_assets	*assets;
 	int			draw_x;
 	int			draw_y;
 	int			i;
 
 	i = 0;
-	assets = game->assets;
 	while (i < MAX_LIVES)
 	{
 		draw_x = i * TILE_WIDTH;
-		draw_y = (game->map->rows) * TILE_HEIGHT;
-		if (i < game->player->lives)
-			put_image(game->win, assets->hearts[FILLED_HEART], draw_x, draw_y);
+		draw_y = (game->map.rows) * TILE_HEIGHT;
+		if (i < game->player.lives)
+			put_image(&game->win, game->assets.hearts[FILLED], draw_x, draw_y);
 		else
-			put_image(game->win, assets->hearts[EMPTY_HEART], draw_x, draw_y);
+			put_image(&game->win, game->assets.hearts[EMPTY], draw_x, draw_y);
 		i++;
 	}
 }
@@ -38,19 +36,19 @@ void	draw_movements(t_game *game)
 	t_assets	*assets;
 	int			draw_x;
 	int			draw_y;
-	int			i;
-	int			moves;
 	int			nb_digits;
+	int			moves;
+	int			i;
 
 	i = 0;
-	assets = game->assets;
-	moves = game->player->move_count;
+	assets = &game->assets;
+	moves = game->player.move_count;
 	nb_digits = ft_nbdigits_base(moves, 10);
 	while (i < nb_digits)
 	{
-		draw_x = (game->map->columns - (i + 1)) * TILE_WIDTH;
-		draw_y = (game->map->rows) * TILE_HEIGHT;
-		put_image(game->win, assets->numbers[moves % 10], draw_x, draw_y);
+		draw_x = (game->map.columns - (i + 1)) * TILE_WIDTH;
+		draw_y = (game->map.rows) * TILE_HEIGHT;
+		put_image(&game->win, assets->numbers[moves % 10], draw_x, draw_y);
 		moves = moves / 10;
 		i++;
 	}

@@ -39,9 +39,12 @@ t_point	get_player_location(t_map *map)
 	return (location);
 }
 
-void	init_player(t_player *player, t_map *map)
+void	init_player(t_game *game)
 {
-	player->location = get_player_location(map);
+	t_player	*player;
+
+	player = &game->player;
+	player->location = get_player_location(&game->map);
 	player->lives = MAX_LIVES;
 	player->collectables = 0;
 	player->move_count = 0;

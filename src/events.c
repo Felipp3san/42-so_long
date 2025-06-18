@@ -23,12 +23,12 @@ int	on_key_press(int key_code, void *param)
 		exit(0);
 	}
 	if (key_code == XK_W || key_code == XK_w)
-		move_up(game->map, game->player);
+		move_up(game);
 	if (key_code == XK_A || key_code == XK_a)
-		move_left(game->map, game->player);
+		move_left(game);
 	if (key_code == XK_S || key_code == XK_s)
-		move_down(game->map, game->player);
+		move_down(game);
 	if (key_code == XK_D || key_code == XK_d)
-		move_right(game->map, game->player);
+		move_right(game);
 	return (0);
 }
