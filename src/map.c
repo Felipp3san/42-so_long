@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:33:01 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 13:40:34 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:29:51 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,27 @@ int	parse_map(t_map *map)
 void	get_map_info(t_map *map, char *map_name)
 {
 	char	*line;
+	int		i;
 
 	map->name = map_name;
 	map->rows = 0;
 	map->columns = 0;
 	map->redraw = 1;
+	map->collectables = 0;
+	map->door_closed = 1;
 	map->fd = open_map(map->name);
 	line = get_next_line(map->fd);
 	while (line)
 	{
-		while (line[map->columns] && line[map->columns] != '\n')
-			map->columns++;
+		i = 0;
+		while (line[i] && line[i] != '\n')
+		{
+			if (line[i] == 'C')
+				map->collectables++;
+			i++;
+			if (i > map->columns)
+				map->columns++;
+		}
 		free(line);
 		line = get_next_line(map->fd);
 		map->rows++;

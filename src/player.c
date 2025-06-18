@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:03:05 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 13:12:20 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:33:35 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_point	get_player_location(t_map *map)
 void	init_player(t_player *player, t_map *map)
 {
 	player->location = get_player_location(map);
-	player->lives = 5;
+	player->lives = MAX_LIVES;
 	player->collectables = 0;
 	player->move_count = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:28:01 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 13:38:29 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:18:17 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ int	initialize_win(t_win *win, t_map *map)
 	return (SUCCESS);
 }
 
-void	clear_program(t_win *win, t_map *map, t_assets *assets)
+void	clear_program(t_game *game)
 {
-	free_assets(win, assets);
-	free_map(map);
-	mlx_destroy_window(win->mlx, win->win);
-	mlx_destroy_display(win->mlx);
-	free(win->mlx);
+	free_assets(game->win, game->assets);
+	free_map(game->map);
+	mlx_destroy_window(game->win->mlx, game->win->win);
+	mlx_destroy_display(game->win->mlx);
+	free(game->win->mlx);
 }
 
 int	game_loop(void *param)
@@ -44,9 +44,11 @@ int	game_loop(void *param)
 
 	if (game->map->redraw == 1)
 	{
-		draw_map(game->win, game->map, game->assets);
-		draw_objects(game->win, game->map, game->assets);
-		draw_player(game->win, game->assets, game->player);
+		draw_map(game);
+		draw_objects(game);
+		draw_player(game);
+		draw_hearts(game);
+		draw_movements(game);
 		game->map->redraw = 0;
 	}
 	return (SUCCESS);
@@ -69,16 +71,16 @@ int	main(int argc, char *argv[])
 			return (EXIT_FAILURE);
 		if (initialize_win(&win, &map) == MALLOC_ERROR)
 			return (free_map(&map), EXIT_FAILURE);
-		init_player(&player, &map);
-		init_assets(&win, &map, &assets);
 		game.map = &map;
 		game.win = &win;
 		game.player = &player;
 		game.assets = &assets;
+		init_player(&player, &map);
+		init_assets(&game);
 		mlx_loop_hook(win.mlx, game_loop, &game);
 		mlx_key_hook(win.win, on_key_press, &game);
 		mlx_loop(win.mlx);
-		clear_program(&win, &map, &assets);
+		clear_program(&game);
 	}
 	return (EXIT_SUCCESS);
 }
