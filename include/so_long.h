@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:27:16 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 00:55:43 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/18 04:14:15 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@
 #define TILE_WIDTH 16
 #define TILE_HEIGHT 16
 
+typedef struct s_point
+{
+	int	column;
+	int	row;
+}	t_point;
+
 typedef struct s_win
 {
 	t_xvar		*mlx;
@@ -30,49 +36,56 @@ typedef struct s_win
 	int			height;
 }	t_win;
 
-typedef struct s_map_info
+typedef struct s_map
 {
+	char	**map;
+	char	*name;
 	int		rows;
 	int		columns;
-}	t_map_info;
+	int		fd;
+	t_point	player_location;
+}	t_map;
 
-typedef struct s_tile_images
+typedef	struct s_assets
 {
-	t_img	**variants;
-	int		count;
-}	t_tile_images;
+	t_img	*wall;
+	t_img	*floor;
+	t_img	*player;
+	t_img	*collectable;
+}	t_assets;
 
-typedef	struct s_game_assets
+typedef struct s_game
 {
-	t_tile_images	walls;
-	t_tile_images	floors;
-	t_tile_images	player;
-	t_tile_images	collectables;
-}	t_game_assets;
+	t_win		*win;
+	t_map		*map;
+	t_assets	*assets;
+}	t_game;
 
-typedef struct s_data
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}	t_data;
+// Main 
+void	clear_program(t_win *win, t_map *map, t_assets *assets);
 
+// Map
 void	free_map(char **map);
-void	clear_program(t_win *win, char **map);
-void	get_map_info(t_map_info *map_info, char *map_name);
-char	**parse_map(t_map_info *map_info, char *map_name);
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-
-// Render
-void	draw_map(t_win *win, char **map, t_map_info *map_info);
-void	draw_objects(t_win *win, char **map, t_map_info *map_info);
-
-// Events
-int	on_key_press(int key_code, t_win *win);
+void	parse_map(t_map *map);
+void	get_map_info(t_map *map, char *map_name);
+void	get_player_location(t_map *map);
 
 // Assets
-void	init_assets(t_game_assets	*assets)
+void	free_assets(t_assets *assets);
+void	init_assets(t_win *win, t_map *map, t_assets *assets);
+
+// Render
+void	draw_map(t_win *win, t_map *map, t_assets *assets);
+void	draw_player(t_win *win, t_map *map, t_assets *assets);
+void	draw_objects(t_win *win, t_map *map, t_assets *assets);
+
+// Events
+int		on_key_press(int key_code, void *param);
+
+// Movement
+void	move_up(t_map *map);
+void	move_right(t_map *map);
+void	move_left(t_map *map);
+void	move_down(t_map *map);
 
 #endif

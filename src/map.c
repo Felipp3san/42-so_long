@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:33:01 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/17 23:09:23 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/18 04:15:30 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,55 +38,81 @@ void	free_map(char **map)
 	free(map);
 }
 
-char	**parse_map(t_map_info *map_info, char *map_name)
+void	parse_map(t_map *map)
 {
-	char	**map;
 	char	*line;
-	int		map_fd;
 	int		i;
 	int		j;
 
-	map_fd = open_map(map_name);
-	map = (char **) malloc(sizeof(char *) * map_info->rows + 1);
-	if (!map)
-		return (NULL);
+	map->fd = open_map(map->name);
+	map->map = (char **) malloc(sizeof(char *) * map->rows + 1);
+	if (!map->map)
+		return ;
 	i = 0;
-	while (i < map_info->rows)
+	while (i < map->rows)
 	{
 		j = 0;
-		map[i] = (char *) malloc(map_info->columns + 1);
-		if (!map[i])
-			return (free_map(map), NULL);
-		line = get_next_line(map_fd);
+		map->map[i] = (char *) malloc(map->columns + 1);
+		if (!map->map[i])
+		{
+			free_map(map->map);
+			return ;
+		}
+		line = get_next_line(map->fd);
 		while (line[j] && line[j] != '\n')
 		{
-			map[i][j] = line[j];
+			map->map[i][j] = line[j];
 			j++;
 		}
 		free(line);
 		i++;
 	}
-	map[i] = NULL;
-	close(map_fd);
-	return (map);
+	map->map[i] = NULL;
+	close(map->fd);
 }
 
-void	get_map_info(t_map_info *map_info, char *map_name)
+void	get_player_location(t_map *map)
+{
+	int	row;
+	int	column;
+
+	map->player_location.row = 0;
+	map->player_location.column = 0;
+	row = 0;
+	while (row < map->rows)
+	{
+		column = 0;
+		while (column < map->columns)
+		{
+			if (map->map[row][column] == 'P')
+			{
+				map->player_location.column = column;
+				map->player_location.row = row;
+				break;
+			}
+			column++;
+		}
+		row++;
+	}
+}
+
+void	get_map_info(t_map *map, char *map_name)
 {
 	char	*line;
 	int		map_fd;
 
-	map_info->rows = 0;
-	map_info->columns = 0;
-	map_fd = open_map(map_name);
+	map->name = map_name;
+	map->rows = 0;
+	map->columns = 0;
+	map_fd = open_map(map->name);
 	line = get_next_line(map_fd);
 	while (line)
 	{
-		while (line[map_info->columns] && line[map_info->columns] != '\n')
-			map_info->columns++;
+		while (line[map->columns] && line[map->columns] != '\n')
+			map->columns++;
 		free(line);
 		line = get_next_line(map_fd);
-		map_info->rows++;
+		map->rows++;
 	}
 	close(map_fd);
 }

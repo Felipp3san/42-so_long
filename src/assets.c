@@ -12,7 +12,19 @@
 
 #include "so_long.h"
 
-t_img	*open_map_tile(t_win *win, char **map, char *path)
+void	free_assets(t_assets *assets)
+{
+	if (assets->wall)
+		free(assets->wall);
+	if (assets->player)
+		free(assets->player);
+	if (assets->floor)
+		free(assets->floor);
+	if (assets->collectable)
+		free(assets->collectable);
+}
+
+t_img	*open_map_tile(t_win *win, t_map *map, t_assets *assets,  char *path)
 {
 	t_img	*img;
 	int		img_width;
@@ -22,19 +34,20 @@ t_img	*open_map_tile(t_win *win, char **map, char *path)
 	if (!img)
 	{
 		perror("mlx_xpm_file_to_image failed");
-		clear_program(win, map);
+		clear_program(win, map, assets);
 		exit(1);
 	}
 	return (img);
 }
 
-void	init_tile_images(t_tile_images *group)
+void	init_assets(t_win *win, t_map *map, t_assets *assets)
 {
-	group->variants = ;
-	group->count = ;
-}
-
-void	init_assets(t_game_assets	*assets)
-{
-	assets->walls = init_tile_images();
+	assets->wall = 
+		open_map_tile(win, map, assets, "./textures/wall.xpm");
+	assets->player = 
+		open_map_tile(win, map, assets, "./textures/player.xpm");
+	assets->floor = 
+		open_map_tile(win, map, assets, "./textures/floor.xpm");
+	assets->collectable = 
+		open_map_tile(win, map, assets, "./textures/collectable_1.xpm");
 }
