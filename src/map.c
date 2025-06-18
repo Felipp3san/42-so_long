@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:33:01 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 04:15:30 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/18 04:30:53 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,19 @@ int	open_map(char *map_name)
 	return (fd);
 }
 
-void	free_map(char **map)
+void	free_map(t_map *map)
 {
-	size_t	i;
+	int	row;
 
-	i = 0;
-	if (!map)
+	row = 0;
+	if (!map->map)
 		return ;
-	while (map[i])
+	while (row < map->rows)
 	{
-		free(map[i]);
-		map[i] = NULL;
-		i++;
+		free(map->map[row]);
+		row++;
 	}
-	free(map);
+	free(map->map);
 }
 
 void	parse_map(t_map *map)
@@ -45,7 +44,7 @@ void	parse_map(t_map *map)
 	int		j;
 
 	map->fd = open_map(map->name);
-	map->map = (char **) malloc(sizeof(char *) * map->rows + 1);
+	map->map = (char **) malloc(sizeof(char *) * map->rows);
 	if (!map->map)
 		return ;
 	i = 0;
@@ -55,7 +54,7 @@ void	parse_map(t_map *map)
 		map->map[i] = (char *) malloc(map->columns + 1);
 		if (!map->map[i])
 		{
-			free_map(map->map);
+			free_map(map);
 			return ;
 		}
 		line = get_next_line(map->fd);
@@ -67,7 +66,6 @@ void	parse_map(t_map *map)
 		free(line);
 		i++;
 	}
-	map->map[i] = NULL;
 	close(map->fd);
 }
 

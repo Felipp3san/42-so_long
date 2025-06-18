@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 23:07:37 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 04:04:50 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/18 04:29:52 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ int	on_key_press(int key_code, void *param)
 
 	game = (t_game *) param;
 	if (key_code == XK_Escape)
-		exit(1);
+	{
+		clear_program(game->win, game->map, game->assets);
+		exit(0);
+	}
 	if (key_code == XK_W || key_code == XK_w)
 	{
 		ft_printf("Move up\n");

@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:27:16 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 04:14:15 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/18 04:27:32 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ typedef struct s_game
 void	clear_program(t_win *win, t_map *map, t_assets *assets);
 
 // Map
-void	free_map(char **map);
+void	free_map(t_map *map);
 void	parse_map(t_map *map);
 void	get_map_info(t_map *map, char *map_name);
 void	get_player_location(t_map *map);
 
 // Assets
-void	free_assets(t_assets *assets);
+void	free_assets(t_win *win, t_assets *assets);
 void	init_assets(t_win *win, t_map *map, t_assets *assets);
 
 // Render

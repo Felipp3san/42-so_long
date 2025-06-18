@@ -12,16 +12,16 @@
 
 #include "so_long.h"
 
-void	free_assets(t_assets *assets)
+void	free_assets(t_win *win, t_assets *assets)
 {
 	if (assets->wall)
-		free(assets->wall);
+		mlx_destroy_image(win->mlx, assets->wall);
 	if (assets->player)
-		free(assets->player);
+		mlx_destroy_image(win->mlx, assets->player);
 	if (assets->floor)
-		free(assets->floor);
+		mlx_destroy_image(win->mlx, assets->floor);
 	if (assets->collectable)
-		free(assets->collectable);
+		mlx_destroy_image(win->mlx, assets->collectable);
 }
 
 t_img	*open_map_tile(t_win *win, t_map *map, t_assets *assets,  char *path)

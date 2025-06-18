@@ -32,11 +32,11 @@ int	initialize_win(t_win *win, t_map *map)
 
 void	clear_program(t_win *win, t_map *map, t_assets *assets)
 {
+	free_assets(win, assets);
+	free_map(map);
 	mlx_destroy_window(win->mlx, win->win);
 	mlx_destroy_display(win->mlx);
 	free(win->mlx);
-	free_map(map->map);
-	free_assets(assets);
 }
 
 int	game_loop(void *param)
