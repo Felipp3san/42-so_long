@@ -1,16 +1,16 @@
 # Variables
-CC			= cc
+CC			= gcc-13 
 RM			= rm -f
 CFLAGS		= -Wall -Wextra -Werror -g
 
 # Names
-NAME		= project
+NAME		= so_long
 LIBFT		= libft.a
 MLX			= libmlx.a
 
 # Includes & Links
 INCLUDE		= -I$(INCLUDE_DIR) -I$(LIBFT_DIR)/include -I/usr/include -I$(MLX_DIR)
-LINK		= -Llibft -lft -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
+LINK		= -Llibft -lft -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11 -lm
 
 # Folders
 INCLUDE_DIR = include
