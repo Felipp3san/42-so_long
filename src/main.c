@@ -6,13 +6,13 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:28:01 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 17:18:17 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/18 22:46:06 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	initialize_win(t_win *win, t_map *map)
+int	init_win(t_win *win, t_map *map)
 {
 	win->width = map->columns * TILE_WIDTH;
 	win->height = map->rows * TILE_HEIGHT + MENU_HEIGHT;
@@ -40,11 +40,19 @@ void	clear_program(t_game *game)
 
 int	game_loop(void *param)
 {
-	t_game	*game = (t_game *) param;
-
+	t_game		*game;
+ 
+	game = (t_game *) param;
+	game->frames->frame_count++;
+	game->frames->real_frame = game->frames->frame_count / 1000;
+	if (game->frames->real_frame != game->frames->last_frame)
+	{
+		game->frames->last_frame = game->frames->real_frame;
+		draw_enemies(game);
+	}
 	if (game->map->redraw == 1)
 	{
-		draw_map(game);
+		draw_background(game);
 		draw_objects(game);
 		draw_player(game);
 		draw_hearts(game);
@@ -54,6 +62,13 @@ int	game_loop(void *param)
 	return (SUCCESS);
 }
 
+void	init_frames(t_frames *frames)
+{
+	frames->frame_count = 1000;
+	frames->last_frame = 0;
+	frames->real_frame = 0;
+}
+
 int	main(int argc, char *argv[])
 {
 	t_game		game;
@@ -61,6 +76,7 @@ int	main(int argc, char *argv[])
 	t_map		map;
 	t_player	player;
 	t_assets	assets;
+	t_frames	frames;
 
 	if (argc == 2)
 	{
@@ -69,14 +85,17 @@ int	main(int argc, char *argv[])
 			return (EXIT_FAILURE); 
 		if(parse_map(&map) == MALLOC_ERROR)
 			return (EXIT_FAILURE);
-		if (initialize_win(&win, &map) == MALLOC_ERROR)
+		if (init_win(&win, &map) == MALLOC_ERROR)
 			return (free_map(&map), EXIT_FAILURE);
+		init_frames(&frames);
+		game.frames = &frames;
 		game.map = &map;
 		game.win = &win;
 		game.player = &player;
 		game.assets = &assets;
 		init_player(&player, &map);
-		init_assets(&game);
+		load_assets(&game);
+		draw_walls(&game);
 		mlx_loop_hook(win.mlx, game_loop, &game);
 		mlx_key_hook(win.win, on_key_press, &game);
 		mlx_loop(win.mlx);

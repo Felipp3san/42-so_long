@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 03:30:16 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 18:12:21 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/18 21:16:32 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	handle_interaction(t_map *map, t_player *player, t_point *next, t_point *previous)
 {
-	if (map->map[next->row][next->column] == 'E' && map->door_closed == 1)
+	if (map->map[next->row][next->column] == 'E' && map->door_state == CLOSED_DOOR)
 		return ;
 	if (map->map[next->row][next->column] == 'X' && player->lives > 0)
 		player->lives--;
@@ -22,7 +22,7 @@ void	handle_interaction(t_map *map, t_player *player, t_point *next, t_point *pr
 	{
 		player->collectables++; 
 		if (player->collectables == map->collectables)
-			map->door_closed = 0;
+			map->door_state = OPEN_DOOR;
 	}
 	map->map[next->row][next->column] = 'P';
 	map->map[previous->row][previous->column] = '0';

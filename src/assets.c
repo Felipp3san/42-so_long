@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 00:56:13 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 17:49:23 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/18 21:53:15 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,12 @@ void	free_assets(t_win *win, t_assets *assets)
 {
 	int	i;
 
-	if (assets->wall)
-		mlx_destroy_image(win->mlx, assets->wall);
-	if (assets->player)
-		mlx_destroy_image(win->mlx, assets->player);
-	if (assets->floor)
-		mlx_destroy_image(win->mlx, assets->floor);
-	if (assets->door_opened)
-		mlx_destroy_image(win->mlx, assets->door_opened);
-	if (assets->door_closed)
-		mlx_destroy_image(win->mlx, assets->door_closed);
+	mlx_destroy_image(win->mlx, assets->wall);
+	mlx_destroy_image(win->mlx, assets->player);
+	mlx_destroy_image(win->mlx, assets->floor);
+	i = 0;
+	while (i < DOORS)
+		mlx_destroy_image(win->mlx, assets->doors[i++]);
 	i = 0;
 	while (i < NUMBERS)
 		mlx_destroy_image(win->mlx, assets->numbers[i++]);
@@ -36,8 +32,8 @@ void	free_assets(t_win *win, t_assets *assets)
 	while (i < HEARTS)
 		mlx_destroy_image(win->mlx, assets->hearts[i++]);
 	i = 0;
-	while (i < ENEMIES)
-		mlx_destroy_image(win->mlx, assets->enemies[i++]);
+	while (i < ENEMY_FRAMES)
+		mlx_destroy_image(win->mlx, assets->enemy[i++]);
 	
 }
 
@@ -57,7 +53,7 @@ t_img	*open_map_tile(t_game *game, char *path)
 	return (img);
 }
 
-void	init_numbers(t_game *game)
+void	load_numbers(t_game *game)
 {
 	game->assets->numbers[0] =
 		open_map_tile(game, "./textures/numbers/0.xpm");
@@ -81,7 +77,7 @@ void	init_numbers(t_game *game)
 		open_map_tile(game, "./textures/numbers/9.xpm");
 }
 
-void	init_collectables(t_game *game)
+void	load_collectables(t_game *game)
 {
 	game->assets->collectables[0] = 
 		open_map_tile(game, "./textures/collectable_1.xpm");
@@ -91,15 +87,25 @@ void	init_collectables(t_game *game)
 		open_map_tile(game, "./textures/collectable_3.xpm");
 }
 
-void	init_enemies(t_game *game)
+void	load_enemy_frames(t_game *game)
 {
-	game->assets->enemies[0] = 
-		open_map_tile(game, "./textures/enemies/enemy_1.xpm");
-	game->assets->enemies[1] = 
-		open_map_tile(game, "./textures/enemies/enemy_2.xpm");
+	game->assets->enemy[0] = 
+		open_map_tile(game, "./textures/enemies/enemy_frame_1.xpm");
+	game->assets->enemy[1] = 
+		open_map_tile(game, "./textures/enemies/enemy_frame_2.xpm");
+	game->assets->enemy[2] = 
+		open_map_tile(game, "./textures/enemies/enemy_frame_3.xpm");
+	game->assets->enemy[3] = 
+		open_map_tile(game, "./textures/enemies/enemy_frame_4.xpm");
+	game->assets->enemy[4] = 
+		open_map_tile(game, "./textures/enemies/enemy_frame_5.xpm");
+	//assets->enemy[0] = open_img(win, "./sprites/enemy_frame_0.xpm");
+	//assets->enemies[1] = open_img(win, "./sprites/enemy_frame_1.xpm");
+	//assets->enemies[2] = open_img(win, "./sprites/enemy_frame_2.xpm");
+	//assets->enemies[3] = open_img(win, "./sprites/enemy_frame_3.xpm");
 }
 
-void	init_assets(t_game *game)
+void	load_assets(t_game *game)
 {
 	game->assets->wall = 
 		open_map_tile(game, "./textures/wall.xpm");
@@ -107,15 +113,15 @@ void	init_assets(t_game *game)
 		open_map_tile(game, "./textures/player.xpm");
 	game->assets->floor = 
 		open_map_tile(game, "./textures/floor.xpm");
-	game->assets->door_opened = 
+	game->assets->doors[OPEN_DOOR] = 
 		open_map_tile(game, "./textures/door_opened.xpm");
-	game->assets->door_closed = 
+	game->assets->doors[CLOSED_DOOR] = 
 		open_map_tile(game, "./textures/door_closed.xpm");
 	game->assets->hearts[EMPTY_HEART] =
 		open_map_tile(game, "./textures/empty_heart.xpm");
 	game->assets->hearts[FILLED_HEART] =
 		open_map_tile(game, "./textures/filled_heart.xpm");
-	init_numbers(game);
-	init_collectables(game);
-	init_enemies(game);
+	load_numbers(game);
+	load_collectables(game);
+	load_enemy_frames(game);
 }
