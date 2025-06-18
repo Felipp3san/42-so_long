@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:28:01 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 04:14:17 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:38:29 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,19 @@
 
 int	initialize_win(t_win *win, t_map *map)
 {
-	win->name = "So_long";
-	win->width = map->columns * 64;
-	win->height = map->rows * 64 + 64;
+	win->width = map->columns * TILE_WIDTH;
+	win->height = map->rows * TILE_HEIGHT + MENU_HEIGHT;
 	win->mlx = mlx_init();
 	if (!win->mlx)
-		return (-1);
-	win->win = mlx_new_window(win->mlx, win->width, win->height, win->name);
+		return (MALLOC_ERROR);
+	win->win = mlx_new_window(win->mlx, win->width, win->height, NAME);
 	if (!win->win)
 	{
 		mlx_destroy_display(win->mlx);
 		free(win->mlx);
-		return (-1);
+		return (MALLOC_ERROR);
 	}
-	return (1);
+	return (SUCCESS);
 }
 
 void	clear_program(t_win *win, t_map *map, t_assets *assets)
@@ -43,36 +42,43 @@ int	game_loop(void *param)
 {
 	t_game	*game = (t_game *) param;
 
-	draw_map(game->win, game->map, game->assets);
-	draw_objects(game->win, game->map, game->assets);
-	draw_player(game->win, game->map, game->assets);
-	return (0);
+	if (game->map->redraw == 1)
+	{
+		draw_map(game->win, game->map, game->assets);
+		draw_objects(game->win, game->map, game->assets);
+		draw_player(game->win, game->assets, game->player);
+		game->map->redraw = 0;
+	}
+	return (SUCCESS);
 }
 
 int	main(int argc, char *argv[])
 {
 	t_game		game;
-	t_map		map;
 	t_win		win;
+	t_map		map;
+	t_player	player;
 	t_assets	assets;
 
 	if (argc == 2)
 	{
 		get_map_info(&map, argv[1]);
 		if (map.rows == 0)
-			return (1); 
-		parse_map(&map);
-		get_player_location(&map);
-		if (!initialize_win(&win, &map))
-			return (1);
+			return (EXIT_FAILURE); 
+		if(parse_map(&map) == MALLOC_ERROR)
+			return (EXIT_FAILURE);
+		if (initialize_win(&win, &map) == MALLOC_ERROR)
+			return (free_map(&map), EXIT_FAILURE);
+		init_player(&player, &map);
 		init_assets(&win, &map, &assets);
 		game.map = &map;
 		game.win = &win;
+		game.player = &player;
 		game.assets = &assets;
 		mlx_loop_hook(win.mlx, game_loop, &game);
 		mlx_key_hook(win.win, on_key_press, &game);
 		mlx_loop(win.mlx);
 		clear_program(&win, &map, &assets);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

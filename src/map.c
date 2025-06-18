@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:33:01 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 04:30:53 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:40:34 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	free_map(t_map *map)
 	free(map->map);
 }
 
-void	parse_map(t_map *map)
+int	parse_map(t_map *map)
 {
 	char	*line;
 	int		i;
@@ -46,17 +46,14 @@ void	parse_map(t_map *map)
 	map->fd = open_map(map->name);
 	map->map = (char **) malloc(sizeof(char *) * map->rows);
 	if (!map->map)
-		return ;
+		return (MALLOC_ERROR);
 	i = 0;
 	while (i < map->rows)
 	{
 		j = 0;
 		map->map[i] = (char *) malloc(map->columns + 1);
 		if (!map->map[i])
-		{
-			free_map(map);
-			return ;
-		}
+			return (free_map(map), MALLOC_ERROR);
 		line = get_next_line(map->fd);
 		while (line[j] && line[j] != '\n')
 		{
@@ -67,50 +64,26 @@ void	parse_map(t_map *map)
 		i++;
 	}
 	close(map->fd);
-}
-
-void	get_player_location(t_map *map)
-{
-	int	row;
-	int	column;
-
-	map->player_location.row = 0;
-	map->player_location.column = 0;
-	row = 0;
-	while (row < map->rows)
-	{
-		column = 0;
-		while (column < map->columns)
-		{
-			if (map->map[row][column] == 'P')
-			{
-				map->player_location.column = column;
-				map->player_location.row = row;
-				break;
-			}
-			column++;
-		}
-		row++;
-	}
+	return (SUCCESS);
 }
 
 void	get_map_info(t_map *map, char *map_name)
 {
 	char	*line;
-	int		map_fd;
 
 	map->name = map_name;
 	map->rows = 0;
 	map->columns = 0;
-	map_fd = open_map(map->name);
-	line = get_next_line(map_fd);
+	map->redraw = 1;
+	map->fd = open_map(map->name);
+	line = get_next_line(map->fd);
 	while (line)
 	{
 		while (line[map->columns] && line[map->columns] != '\n')
 			map->columns++;
 		free(line);
-		line = get_next_line(map_fd);
+		line = get_next_line(map->fd);
 		map->rows++;
 	}
-	close(map_fd);
+	close(map->fd);
 }
