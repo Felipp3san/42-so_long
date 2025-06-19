@@ -6,54 +6,54 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:27:16 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/19 19:15:58 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:33:34 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-#include "mlx_int.h"
-#include "libft.h"
-#include "mlx.h"
-#include <math.h>
+# include "mlx_int.h"
+# include "libft.h"
+# include "mlx.h"
+# include <math.h>
 
-#define MALLOC_ERROR -1
-#define SUCCESS 0 
+# define MALLOC_ERROR -1
+# define SUCCESS 0 
 
 // Window 
-#define NAME "So_long"
-#define TILE_WIDTH 64 
-#define TILE_HEIGHT 64 
-#define MENU_HEIGHT 64
+# define NAME "So_long"
+# define TILE_WIDTH 64 
+# define TILE_HEIGHT 64 
+# define MENU_HEIGHT 64
 
 // Lives
-#define MAX_LIVES 3 
-#define EMPTY 0
-#define FILLED 1
+# define MAX_LIVES 3 
+# define EMPTY 0
+# define FILLED 1
 
 // Objects
-#define OPEN 0
-#define CLOSED 1
+# define OPEN 0
+# define CLOSED 1
 
 // Frames 
-#define MAX_FRAME 4294967290
-#define FRAMES 5
-#define	ANIMATION_SPEED 1000
-#define	MOVEMENT_SPEED 100000
+# define MAX_FRAME 4294967290
+# define FRAMES 5
+# define ANIMATION_SPEED 1000
+# define MOVEMENT_SPEED 100000
 
 // Assets
-#define FLOORS 3
-#define NUMBERS 10
-#define COLLECTABLES 3
-#define HEARTS 2
-#define DOORS 2
+# define FLOORS 3
+# define NUMBERS 10
+# define COLLECTABLES 3
+# define HEARTS 2
+# define DOORS 2
 
 // Movement
-#define UP 0  
-#define LEFT 1 
-#define DOWN 2 
-#define RIGHT 3
+# define UP 0  
+# define LEFT 1 
+# define DOWN 2 
+# define RIGHT 3
 
 typedef struct s_point
 {
@@ -96,7 +96,7 @@ typedef struct s_enemy
 	int		next_direction;
 }	t_enemy;
 
-typedef	struct s_assets
+typedef struct s_assets
 {
 	t_img	*player;
 	t_img	*wall;
@@ -135,7 +135,7 @@ int		parse_map(t_map *map);
 void	extract_map_info(t_map *map);
 
 // map_utils.c
-int	open_map(char *map_name);
+int		open_map(char *map_name);
 void	free_map(t_map *map);
 
 // map_validation.c
