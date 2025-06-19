@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:28:01 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 22:50:38 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:06:57 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	clear_program(t_game *game)
 
 	win = &game->win;
 	map = &game->map;
+	free(game->enemies);
 	free_map(map);
 	free_assets(game);
 	mlx_destroy_window(win->mlx, win->win);
@@ -97,6 +98,7 @@ int	main(int argc, char *argv[])
 			return (free_map(&game.map), EXIT_FAILURE);
 		init_frames(&game.frames);
 		init_player(&game);
+		init_enemies(&game);
 		load_assets(&game);
 		draw_walls(&game);
 		mlx_loop_hook(game.win.mlx, game_loop, &game);

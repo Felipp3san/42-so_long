@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:33:01 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 21:16:14 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:36:31 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	get_map_info(t_map *map, char *map_name)
 	map->columns = 0;
 	map->redraw = 1;
 	map->collectables = 0;
+	map->enemies = 0;
 	map->door_state = CLOSED;
 	map->fd = open_map(map->name);
 	line = get_next_line(map->fd);
@@ -87,6 +88,8 @@ void	get_map_info(t_map *map, char *map_name)
 		{
 			if (line[i] == 'C')
 				map->collectables++;
+			if (line[i] == 'X')
+				map->enemies++;
 			i++;
 			if (i > map->columns)
 				map->columns++;

@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 21:00:02 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 22:52:45 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:03:00 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,23 @@ void	draw_player(t_game *game)
 void	draw_enemies(t_game *game)
 {
 	t_assets	*assets;
+	t_enemy		*enemies;
+	t_map		*map;
 	int			draw_x;
 	int			draw_y;
-	int			column;
-	int			row;
 	int			frame; 
+	int			i;
 
+	map = &game->map;
 	assets = &game->assets;
-	frame = (game->frames.real_frame / 10) % FRAMES;
-	row = 0;
-	while (row < game->map.rows)
+	enemies = game->enemies;
+	i = 0;
+	while (i < map->enemies)
 	{
-		column = 0;
-		while (column < game->map.columns)
-		{
-			draw_x = column * TILE_WIDTH;
-			draw_y = row * TILE_HEIGHT;
-			if (game->map.map[row][column] == 'X')
-				put_image(&game->win, assets->enemy[frame], draw_x, draw_y);
-			column++;
-		}
-		row++;
+		draw_x = enemies[i].location.column * TILE_WIDTH;
+		draw_y = enemies[i].location.row * TILE_HEIGHT;
+		frame = (game->frames.real_frame / 10 * (i + 1)) % FRAMES;
+		put_image(&game->win, assets->enemy[frame], draw_x, draw_y);
+		i++;
 	}
 }

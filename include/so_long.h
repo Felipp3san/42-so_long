@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:27:16 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 22:47:42 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:49:37 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_map
 	int		rows;
 	int		redraw;
 	int		collectables;
+	int		enemies;
 	int		door_state;
 	int		fd;
 }	t_map;
@@ -79,6 +80,12 @@ typedef struct s_player
 	int		collectables;
 	int		move_count;
 }	t_player;
+
+typedef struct s_enemy
+{
+	t_point	location;
+	int		alive;
+}	t_enemy;
 
 typedef	struct s_assets
 {
@@ -104,6 +111,7 @@ typedef struct s_game
 {
 	t_win		win;
 	t_map		map;
+	t_enemy		*enemies;
 	t_player	player;
 	t_assets	assets;
 	t_frames	frames;
@@ -119,6 +127,9 @@ void	get_map_info(t_map *map, char *map_name);
 
 // Player 
 void	init_player(t_game *game);
+
+// Enemies
+void	init_enemies(t_game *game);
 
 // Assets
 void	free_assets(t_game *game);
