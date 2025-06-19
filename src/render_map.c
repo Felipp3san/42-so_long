@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 23:08:46 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 22:54:14 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/20 00:47:34 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 void	draw_background(t_game *game)
 {
-	int		draw_x;
-	int		draw_y;
-	int		column;
-	int		row;
-	int		idx;
+	int	draw_x;
+	int	draw_y;
+	int	column;
+	int	row;
 
 	row = 0;
 	while (row < game->map.rows)
@@ -28,11 +27,13 @@ void	draw_background(t_game *game)
 		{
 			draw_x = column * TILE_WIDTH;
 			draw_y = row * TILE_HEIGHT;
-			if (game->map.map[row][column] == '0')
-			{
-				idx = get_random_idx(column, row);
-				put_image(&game->win, game->assets.floors[idx], draw_x, draw_y);
-			}
+			if (game->map.map[row][column] == 'E')
+				put_image(&game->win,
+					game->assets.doors[game->map.door_state], draw_x, draw_y);
+			else if (game->map.map[row][column] == '0')
+				put_image(&game->win,
+					game->assets.floors[get_random_idx(column, row)],
+					draw_x, draw_y);
 			column++;
 		}
 		row++;
@@ -88,13 +89,41 @@ void	draw_torches(t_game *game)
 	}
 }
 
-void	draw_objects(t_game *game)
+void	draw_collectables(t_game *game)
 {
-	t_map		*map;
-	int			draw_x;
-	int			draw_y;
-	int			column;
-	int			row;
+	int		draw_x;
+	int		draw_y;
+	int		column;
+	int		row;
+	int		frame;
+
+	row = 0;
+	while (row < game->map.rows)
+	{
+		column = 0;
+		while (column < game->map.columns)
+		{
+			draw_x = column * TILE_WIDTH;
+			draw_y = row * TILE_HEIGHT;
+			if (game->map.map[row][column] == 'C')
+			{
+				frame = (game->frames.real_frame / 10) % FRAMES;
+				put_image(&game->win,
+					game->assets.collectables[frame], draw_x, draw_y);
+			}
+			column++;
+		}
+		row++;
+	}
+}
+
+void	draw_exit(t_game *game)
+{
+	t_map	*map;
+	int		draw_x;
+	int		draw_y;
+	int		column;
+	int		row;
 
 	map = &game->map;
 	row = 0;
@@ -105,10 +134,7 @@ void	draw_objects(t_game *game)
 		{
 			draw_x = column * TILE_WIDTH;
 			draw_y = row * TILE_HEIGHT;
-			if (map->map[row][column] == 'C')
-				put_image(&game->win,
-					game->assets.collectables[0], draw_x, draw_y);
-			else if (game->map.map[row][column] == 'E')
+			if (game->map.map[row][column] == 'E')
 				put_image(&game->win,
 					game->assets.doors[map->door_state], draw_x, draw_y);
 			column++;

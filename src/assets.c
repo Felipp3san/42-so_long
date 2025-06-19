@@ -33,7 +33,7 @@ void	free_assets(t_game *game)
 	destroy_image_array(win->mlx, assets->floors, FLOORS);
 	destroy_image_array(win->mlx, assets->doors, DOORS);
 	destroy_image_array(win->mlx, assets->numbers, NUMBERS);
-	destroy_image_array(win->mlx, assets->collectables, COLLECTABLES);
+	destroy_image_array(win->mlx, assets->collectables, FRAMES);
 	destroy_image_array(win->mlx, assets->hearts, HEARTS);
 	destroy_image_array(win->mlx, assets->enemy, FRAMES);
 	destroy_image_array(win->mlx, assets->torch, FRAMES);
@@ -54,7 +54,7 @@ void	load_assets(t_game *game)
 	assets->hearts[EMPTY] = open_img(game, "./textures/empty_heart.xpm");
 	assets->hearts[FILLED] = open_img(game, "./textures/filled_heart.xpm");
 	load_numbers(game);
-	load_collectables(game);
+	load_collectable_frames(game);
 	load_enemy_frames(game);
 	load_torch_frames(game);
 }

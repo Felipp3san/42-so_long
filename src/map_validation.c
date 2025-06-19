@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:14:45 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/19 22:00:40 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/20 00:47:47 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	exit_collectables_lookup(t_map *map, char **clone_map)
 		j = 0;
 		while (j < map->columns)
 		{
-			if(clone_map[i][j] == 'E' || clone_map[i][j] == 'C')
+			if (clone_map[i][j] == 'E' || clone_map[i][j] == 'C')
 				found = 1;
 			j++;
 		}
@@ -63,6 +63,8 @@ static int	exit_collectables_lookup(t_map *map, char **clone_map)
 
 static int	has_valid_path(t_map *map)
 {
+	int		i;
+	int		found;
 	char	**clone_map;
 	t_point	start;
 
@@ -71,10 +73,15 @@ static int	has_valid_path(t_map *map)
 	if (!clone_map)
 		free_map_exit(map, "Failed to clone map.");
 	flood_fill(map, clone_map, start);
-	if (!exit_collectables_lookup(map, clone_map))
-		return (free(clone_map), 1);
+	found = exit_collectables_lookup(map, clone_map);
+	i = 0;
+	while (i < map->rows)
+		free(clone_map[i++]);
+	free(clone_map);
+	if (!found)
+		return (1);
 	else
-		return (free(clone_map), 0);
+		return (0);
 }
 
 void	validate_map(t_map *map)

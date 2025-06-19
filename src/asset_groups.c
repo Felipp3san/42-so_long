@@ -29,14 +29,16 @@ void	load_numbers(t_game *game)
 	assets->numbers[9] = open_img(game, "./textures/numbers/9.xpm");
 }
 
-void	load_collectables(t_game *game)
+void	load_collectable_frames(t_game *game)
 {
 	t_assets	*assets;
 
 	assets = &game->assets;
-	assets->collectables[0] = open_img(game, "./textures/collectable_1.xpm");
-	assets->collectables[1] = open_img(game, "./textures/collectable_2.xpm");
-	assets->collectables[2] = open_img(game, "./textures/collectable_3.xpm");
+	assets->collectables[0] = open_img(game, "./textures/collect_frame_1.xpm");
+	assets->collectables[1] = open_img(game, "./textures/collect_frame_2.xpm");
+	assets->collectables[2] = open_img(game, "./textures/collect_frame_3.xpm");
+	assets->collectables[3] = open_img(game, "./textures/collect_frame_4.xpm");
+	assets->collectables[4] = open_img(game, "./textures/collect_frame_5.xpm");
 }
 
 void	load_enemy_frames(t_game *game)

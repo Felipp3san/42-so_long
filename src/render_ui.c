@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-void	draw_hearts(t_game *game)
+void	draw_hearts_ui(t_game *game)
 {
 	int			draw_x;
 	int			draw_y;
@@ -31,7 +31,7 @@ void	draw_hearts(t_game *game)
 	}
 }
 
-void	draw_movements(t_game *game)
+void	draw_movements_ui(t_game *game)
 {
 	int			draw_x;
 	int			draw_y;

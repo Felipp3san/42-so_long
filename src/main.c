@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:28:01 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/19 20:50:36 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/20 00:46:55 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,16 @@ int	game_loop(void *param)
 		game->frames.last_frame = game->frames.real_frame;
 		draw_enemies(game);
 		draw_torches(game);
+		draw_collectables(game);
 	}
 	if (game->frames.frame_count % MOVEMENT_SPEED == 0)
 		movement_enemies(game);
 	if (game->map.redraw == 1)
 	{
 		draw_background(game);
-		draw_objects(game);
 		draw_player(game);
-		draw_hearts(game);
-		draw_movements(game);
+		draw_hearts_ui(game);
+		draw_movements_ui(game);
 		game->map.redraw = 0;
 	}
 	return (SUCCESS);

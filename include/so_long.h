@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:27:16 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/19 21:44:15 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/20 00:41:59 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@
 // Assets
 # define FLOORS 3
 # define NUMBERS 10
-# define COLLECTABLES 3
 # define HEARTS 2
 # define DOORS 2
 
@@ -105,7 +104,7 @@ typedef struct s_assets
 	t_img	*floors[FLOORS];
 	t_img	*hearts[HEARTS];
 	t_img	*numbers[NUMBERS];
-	t_img	*collectables[COLLECTABLES];
+	t_img	*collectables[FRAMES];
 	t_img	*enemy[FRAMES];
 	t_img	*torch[FRAMES];
 	t_img	*doors[DOORS];
@@ -120,12 +119,12 @@ typedef struct s_frames
 
 typedef struct s_game
 {
-	t_frames	frames;
-	t_win		win;
-	t_map		map;
-	t_enemy		*enemies;
-	t_player	player;
-	t_assets	assets;
+	t_frames		frames;
+	t_win			win;
+	t_map			map;
+	t_player		player;
+	t_enemy			*enemies;
+	t_assets		assets;
 }	t_game;
 
 // main.c 
@@ -162,7 +161,7 @@ void	load_assets(t_game *game);
 
 // asset_groups.c
 void	load_numbers(t_game *game);
-void	load_collectables(t_game *game);
+void	load_collectable_frames(t_game *game);
 void	load_enemy_frames(t_game *game);
 void	load_torch_frames(t_game *game);
 
@@ -176,7 +175,8 @@ int		get_random_idx(int column, int row);
 // render_map.c
 void	draw_background(t_game *game);
 void	draw_walls(t_game *game);
-void	draw_objects(t_game *game);
+void	draw_collectables(t_game *game);
+void	draw_exit(t_game *game);
 void	draw_torches(t_game *game);
 
 // render_entities.c
@@ -184,8 +184,8 @@ void	draw_player(t_game *game);
 void	draw_enemies(t_game *game);
 
 // render_ui.c
-void	draw_hearts(t_game *game);
-void	draw_movements(t_game *game);
+void	draw_hearts_ui(t_game *game);
+void	draw_movements_ui(t_game *game);
 
 // events.c
 int		close_window(void *param);
