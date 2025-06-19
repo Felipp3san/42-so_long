@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:33:01 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/19 19:15:31 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:58:43 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,18 @@ int	parse_map(t_map *map)
 	return (SUCCESS);
 }
 
+static void	count_map_tile(t_map *map, char tile)
+{
+	if (tile == 'C')
+		map->collectable_count++;
+	else if (tile == 'X')
+		map->enemy_count++;
+	else if (tile == 'E')
+		map->exit_count++;
+	else if (tile == 'P')
+		map->player_count++;
+}
+
 void	extract_map_info(t_map *map)
 {
 	char	*line;
@@ -64,10 +76,7 @@ void	extract_map_info(t_map *map)
 		i = 0;
 		while (line[i] && line[i] != '\n')
 		{
-			if (line[i] == 'C')
-				map->collectable_count++;
-			else if (line[i] == 'X')
-				map->enemy_count++;
+			count_map_tile(map, line[i]);
 			i++;
 			if (i > map->columns)
 				map->columns++;

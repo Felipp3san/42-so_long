@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:27:16 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/19 20:33:34 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:44:15 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ typedef struct s_map
 	int		rows;
 	int		redraw;
 	int		collectable_count;
+	int		player_count;
 	int		enemy_count;
+	int		exit_count;
 	int		door_state;
 }	t_map;
 
@@ -137,11 +139,17 @@ void	extract_map_info(t_map *map);
 // map_utils.c
 int		open_map(char *map_name);
 void	free_map(t_map *map);
+void	free_map_exit(t_map *map, char *error);
+char	**ft_clone_map(t_map *map);
 
 // map_validation.c
 void	validate_map(t_map *map);
 
+// flood_fill.c
+void	flood_fill(t_map *map, char **clone_map, t_point start);
+
 // player.c 
+t_point	get_player_location(t_map *map);
 void	init_player(t_game *game);
 
 // enemy.c 

@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 18:59:19 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/19 19:14:05 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:25:07 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,35 @@ void	free_map(t_map *map)
 		row++;
 	}
 	free(map->map);
+}
+
+void	free_map_exit(t_map *map, char *error)
+{
+	free_map(map);
+	ft_dprintf(2, "Error: %s\n", error);
+	exit(EXIT_FAILURE);
+}
+
+char	**ft_clone_map(t_map *map)
+{
+	char	**clone_map;
+	int		i;
+
+	clone_map = (char **) malloc(sizeof(char *) * map->rows);
+	if (!clone_map)
+		free_map_exit(map, "Failed to clone map.");
+	i = 0;
+	while (i < map->rows)
+	{
+		clone_map[i] = ft_strdup(map->map[i]);
+		if (!clone_map[i])
+		{
+			while (i >= 0)
+				free(clone_map[i--]);
+			free(clone_map);
+			return (NULL);
+		}
+		i++;
+	}
+	return (clone_map);
 }
