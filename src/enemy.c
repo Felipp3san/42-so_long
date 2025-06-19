@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 15:39:13 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/19 15:56:23 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:45:41 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,11 @@ t_point	get_enemy_location(t_map *map, int start_row, int start_column)
 void	init_enemies(t_game *game)
 {
 	t_enemy	*enemies;
-	t_map	*map;
 	int		i;
 	int		row;
 	int		column;
 
-	map = &game->map;
-	game->enemies = (t_enemy *) malloc(sizeof(t_enemy) * map->enemies);
+	game->enemies = (t_enemy *) malloc(sizeof(t_enemy) * game->map.enemy_count);
 	if (!game->enemies)
 	{
 		clear_program(game);
@@ -59,13 +57,13 @@ void	init_enemies(t_game *game)
 	i = 0;
 	row = 0;
 	column = 0;
-	while (i < map->enemies)
+	while (i < game->map.enemy_count)
 	{
 		enemies[i].location = get_enemy_location(&game->map, row, column);
 		enemies[i].alive = 1;
+		enemies[i].next_direction = i % 4;
 		row = enemies[i].location.row;
 		column = enemies[i].location.column + 1;
 		i++;
 	}
 }
-

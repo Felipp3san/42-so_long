@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_utils.c                                     :+:      :+:    :+:   */
+/*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 16:13:34 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 16:13:51 by fde-alme         ###   ########.fr       */
+/*   Created: 2025/06/19 18:59:19 by fde-alme          #+#    #+#             */
+/*   Updated: 2025/06/19 19:14:05 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	get_random_idx(int column, int row)
+int	open_map(char *map_name)
 {
-	int	hash;
-	int	idx;
+	int	fd;
 
-	hash = (column * 13 + row * 31) % 100;
-	if (hash < 5)
-		idx = 2;
-	else if (hash < 20)
-		idx = 1;
-	else
-		idx = 0;
-	return (idx);
+	fd = open(map_name, O_RDONLY);
+	if (fd == -1)
+		exit(EXIT_FAILURE);
+	return (fd);
 }
 
-void	put_image(t_win *win, t_img *asset, int x, int y)
+void	free_map(t_map *map)
 {
-	t_xvar		*mlx;
-	t_win_list	*win_lst;
+	int	row;
 
-	mlx = win->mlx;
-	win_lst = win->win;
-	mlx_put_image_to_window(mlx, win_lst, asset, x, y);
+	row = 0;
+	if (!map->map)
+		return ;
+	while (row < map->rows)
+	{
+		free(map->map[row]);
+		row++;
+	}
+	free(map->map);
 }

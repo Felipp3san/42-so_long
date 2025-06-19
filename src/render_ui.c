@@ -33,7 +33,6 @@ void	draw_hearts(t_game *game)
 
 void	draw_movements(t_game *game)
 {
-	t_assets	*assets;
 	int			draw_x;
 	int			draw_y;
 	int			nb_digits;
@@ -41,14 +40,13 @@ void	draw_movements(t_game *game)
 	int			i;
 
 	i = 0;
-	assets = &game->assets;
 	moves = game->player.move_count;
 	nb_digits = ft_nbdigits_base(moves, 10);
 	while (i < nb_digits)
 	{
 		draw_x = (game->map.columns - (i + 1)) * TILE_WIDTH;
 		draw_y = (game->map.rows) * TILE_HEIGHT;
-		put_image(&game->win, assets->numbers[moves % 10], draw_x, draw_y);
+		put_image(&game->win, game->assets.numbers[moves % 10], draw_x, draw_y);
 		moves = moves / 10;
 		i++;
 	}

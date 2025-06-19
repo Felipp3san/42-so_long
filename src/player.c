@@ -30,7 +30,7 @@ t_point	get_player_location(t_map *map)
 			{
 				location.column = column;
 				location.row = row;
-				break;
+				return (location);
 			}
 			column++;
 		}
@@ -49,4 +49,3 @@ void	init_player(t_game *game)
 	player->collectables = 0;
 	player->move_count = 0;
 }
-

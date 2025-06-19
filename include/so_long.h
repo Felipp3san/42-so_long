@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:27:16 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/19 15:49:37 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:15:58 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@
 #define CLOSED 1
 
 // Frames 
+#define MAX_FRAME 4294967290
 #define FRAMES 5
+#define	ANIMATION_SPEED 1000
+#define	MOVEMENT_SPEED 100000
 
 // Assets
 #define FLOORS 3
@@ -45,6 +48,12 @@
 #define COLLECTABLES 3
 #define HEARTS 2
 #define DOORS 2
+
+// Movement
+#define UP 0  
+#define LEFT 1 
+#define DOWN 2 
+#define RIGHT 3
 
 typedef struct s_point
 {
@@ -67,10 +76,9 @@ typedef struct s_map
 	int		columns;
 	int		rows;
 	int		redraw;
-	int		collectables;
-	int		enemies;
+	int		collectable_count;
+	int		enemy_count;
 	int		door_state;
-	int		fd;
 }	t_map;
 
 typedef struct s_player
@@ -85,6 +93,7 @@ typedef struct s_enemy
 {
 	t_point	location;
 	int		alive;
+	int		next_direction;
 }	t_enemy;
 
 typedef	struct s_assets
@@ -102,61 +111,79 @@ typedef	struct s_assets
 
 typedef struct s_frames
 {
-	int			frame_count;
-	int			real_frame;
-	int			last_frame;
+	unsigned int	frame_count;
+	unsigned int	real_frame;
+	unsigned int	last_frame;
 }	t_frames;
 
 typedef struct s_game
 {
+	t_frames	frames;
 	t_win		win;
 	t_map		map;
 	t_enemy		*enemies;
 	t_player	player;
 	t_assets	assets;
-	t_frames	frames;
 }	t_game;
 
-// Main 
+// main.c 
 void	clear_program(t_game *game);
 
-// Map
-void	free_map(t_map *map);
+// map.c 
+void	init_map(t_map *map, char *map_name);
 int		parse_map(t_map *map);
-void	get_map_info(t_map *map, char *map_name);
+void	extract_map_info(t_map *map);
 
-// Player 
+// map_utils.c
+int	open_map(char *map_name);
+void	free_map(t_map *map);
+
+// map_validation.c
+void	validate_map(t_map *map);
+
+// player.c 
 void	init_player(t_game *game);
 
-// Enemies
+// enemy.c 
 void	init_enemies(t_game *game);
+void	movement_enemies(t_game *game);
 
-// Assets
+// assets.c 
 void	free_assets(t_game *game);
 void	load_assets(t_game *game);
 
-// Render Utilse_hook.o obj/mlx_key_hook.o obj/mlx_expose_hook.o obj/mlx_loop_hook
-void	put_image(t_win *win, t_img *asset, int x, int y);
+// asset_groups.c
+void	load_numbers(t_game *game);
+void	load_collectables(t_game *game);
+void	load_enemy_frames(t_game *game);
+void	load_torch_frames(t_game *game);
 
-// Render Map 
+// asset_utils.c
+t_img	*open_img(t_game *game, char *path);
+
+// render_utils.c
+void	put_image(t_win *win, t_img *asset, int x, int y);
+int		get_random_idx(int column, int row);
+
+// render_map.c
 void	draw_background(t_game *game);
 void	draw_walls(t_game *game);
 void	draw_objects(t_game *game);
 void	draw_torches(t_game *game);
 
-// Render Entities
+// render_entities.c
 void	draw_player(t_game *game);
 void	draw_enemies(t_game *game);
 
-// Render UI
+// render_ui.c
 void	draw_hearts(t_game *game);
 void	draw_movements(t_game *game);
 
-// Events
+// events.c
 int		close_window(void *param);
 int		on_key_press(int key_code, void *param);
 
-// Movement
+// actions.c
 void	move_up(t_game *game);
 void	move_right(t_game *game);
 void	move_left(t_game *game);

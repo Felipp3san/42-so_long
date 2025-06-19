@@ -19,7 +19,6 @@ void	draw_background(t_game *game)
 	int		column;
 	int		row;
 	int		idx;
-	int		hash;
 
 	row = 0;
 	while (row < game->map.rows)
@@ -31,13 +30,7 @@ void	draw_background(t_game *game)
 			draw_y = row * TILE_HEIGHT;
 			if (game->map.map[row][column] == '0')
 			{
-				hash = (column * 13 + row * 31) % 100;
-				if (hash < 5)
-					idx = 2;       // rare
-				else if (hash < 20)
-					idx = 1;       // less rare
-				else
-					idx = 0;       // common
+				idx = get_random_idx(column, row);
 				put_image(&game->win, game->assets.floors[idx], draw_x, draw_y);
 			}
 			column++;
@@ -76,25 +69,27 @@ void	draw_torches(t_game *game)
 	t_map	*map;
 	int		draw_x;
 	int		draw_y;
-	int		frame; 
+	int		frame;
+	int		i;
 
 	map = &game->map;
-	draw_y = 0;
-	draw_x = (map->columns - 1) * TILE_WIDTH;
-	frame = (game->frames.real_frame / 10) % FRAMES;
-	put_image(&game->win, game->assets.torch[frame], 0, draw_y);
-	frame = (game->frames.real_frame / 20) % FRAMES;
-	put_image(&game->win, game->assets.torch[frame], draw_x, draw_y);
-	draw_y = (map->rows - 1) * TILE_HEIGHT;
-	frame = (game->frames.real_frame / 30) % FRAMES;
-	put_image(&game->win, game->assets.torch[frame], 0, draw_y);
-	frame = (game->frames.real_frame / 40) % FRAMES;
-	put_image(&game->win, game->assets.torch[frame], draw_x, draw_y);
+	i = 0;
+	while (i < 4)
+	{
+		draw_x = 0;
+		draw_y = 0;
+		if (i % 2 == 1)
+			draw_x = (map->columns - 1) * TILE_WIDTH;
+		if (i >= 2)
+			draw_y = (map->rows - 1) * TILE_HEIGHT;
+		frame = (game->frames.real_frame / 10 * (i + 1)) % FRAMES;
+		put_image(&game->win, game->assets.torch[frame], draw_x, draw_y);
+		i++;
+	}
 }
 
 void	draw_objects(t_game *game)
 {
-	t_assets	*assets;
 	t_map		*map;
 	int			draw_x;
 	int			draw_y;
@@ -102,7 +97,6 @@ void	draw_objects(t_game *game)
 	int			row;
 
 	map = &game->map;
-	assets = &game->assets;
 	row = 0;
 	while (row < map->rows)
 	{
@@ -112,9 +106,11 @@ void	draw_objects(t_game *game)
 			draw_x = column * TILE_WIDTH;
 			draw_y = row * TILE_HEIGHT;
 			if (map->map[row][column] == 'C')
-				put_image(&game->win, assets->collectables[0], draw_x, draw_y);
+				put_image(&game->win,
+					game->assets.collectables[0], draw_x, draw_y);
 			else if (game->map.map[row][column] == 'E')
-				put_image(&game->win, assets->doors[map->door_state], draw_x, draw_y);
+				put_image(&game->win,
+					game->assets.doors[map->door_state], draw_x, draw_y);
 			column++;
 		}
 		row++;
