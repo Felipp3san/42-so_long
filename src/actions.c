@@ -37,6 +37,7 @@ void	handle_interaction(t_game *game, t_point *next, t_point *previous)
 	player->move_count++;
 	player->location.row = next->row; 
 	player->location.column = next->column; 
+	ft_printf("Move count: %d\n", player->move_count);
 }
 
 void	move_up(t_game *game)

@@ -32,7 +32,7 @@ void	draw_enemies(t_game *game)
 	int			frame; 
 
 	assets = &game->assets;
-	frame = (game->frames.real_frame / 10) % ENEMY_FRAMES;
+	frame = (game->frames.real_frame / 10) % FRAMES;
 	row = 0;
 	while (row < game->map.rows)
 	{

@@ -36,10 +36,11 @@
 #define OPEN 0
 #define CLOSED 1
 
-// Enemies
-#define ENEMY_FRAMES 5
+// Frames 
+#define FRAMES 5
 
 // Assets
+#define FLOORS 3
 #define NUMBERS 10
 #define COLLECTABLES 3
 #define HEARTS 2
@@ -81,13 +82,14 @@ typedef struct s_player
 
 typedef	struct s_assets
 {
-	t_img	*wall;
-	t_img	*floor;
 	t_img	*player;
+	t_img	*wall;
+	t_img	*floors[FLOORS];
 	t_img	*hearts[HEARTS];
 	t_img	*numbers[NUMBERS];
 	t_img	*collectables[COLLECTABLES];
-	t_img	*enemy[ENEMY_FRAMES];
+	t_img	*enemy[FRAMES];
+	t_img	*torch[FRAMES];
 	t_img	*doors[DOORS];
 }	t_assets;
 
@@ -122,13 +124,14 @@ void	init_player(t_game *game);
 void	free_assets(t_game *game);
 void	load_assets(t_game *game);
 
-// Render Utils
+// Render Utilse_hook.o obj/mlx_key_hook.o obj/mlx_expose_hook.o obj/mlx_loop_hook
 void	put_image(t_win *win, t_img *asset, int x, int y);
 
 // Render Map 
 void	draw_background(t_game *game);
 void	draw_walls(t_game *game);
 void	draw_objects(t_game *game);
+void	draw_torches(t_game *game);
 
 // Render Entities
 void	draw_player(t_game *game);
@@ -139,6 +142,7 @@ void	draw_hearts(t_game *game);
 void	draw_movements(t_game *game);
 
 // Events
+int		close_window(void *param);
 int		on_key_press(int key_code, void *param);
 
 // Movement

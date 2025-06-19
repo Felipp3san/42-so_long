@@ -12,6 +12,16 @@
 
 #include "so_long.h"
 
+int	close_window(void *param)
+{
+	t_game	*game;
+
+	game = (t_game *) param;
+	ft_printf("Closing game...\n");
+	clear_program(game);
+	exit(EXIT_SUCCESS);
+}
+
 int	on_key_press(int key_code, void *param)
 {
 	t_game	*game;
@@ -20,7 +30,7 @@ int	on_key_press(int key_code, void *param)
 	if (key_code == XK_Escape)
 	{
 		clear_program(game);
-		exit(0);
+		exit(EXIT_SUCCESS);
 	}
 	if (key_code == XK_W || key_code == XK_w)
 		move_up(game);

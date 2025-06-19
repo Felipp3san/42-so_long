@@ -22,8 +22,10 @@ void	free_assets(t_game *game)
 	assets = &game->assets;
 	mlx_destroy_image(win->mlx, assets->wall);
 	mlx_destroy_image(win->mlx, assets->player);
-	mlx_destroy_image(win->mlx, assets->floor);
-	i = DOORS;
+	i = 0;
+	while (i < FLOORS)
+		mlx_destroy_image(win->mlx, assets->floors[i++]);
+	i = 0;
 	while (i < DOORS)
 		mlx_destroy_image(win->mlx, assets->doors[i++]);
 	i = 0;
@@ -36,8 +38,12 @@ void	free_assets(t_game *game)
 	while (i < HEARTS)
 		mlx_destroy_image(win->mlx, assets->hearts[i++]);
 	i = 0;
-	while (i < ENEMY_FRAMES)
-		mlx_destroy_image(win->mlx, assets->enemy[i++]);
+	while (i < FRAMES)
+	{
+		mlx_destroy_image(win->mlx, assets->enemy[i]);
+		mlx_destroy_image(win->mlx, assets->torch[i]);
+		i++;
+	}
 }
 
 t_img	*open_img(t_game *game, char *path)
@@ -95,6 +101,18 @@ void	load_enemy_frames(t_game *game)
 	assets->enemy[4] = open_img(game, "./textures/enemies/enemy_frame_5.xpm");
 }
 
+void	load_torch_frames(t_game *game)
+{
+	t_assets	*assets;
+	
+	assets = &game->assets;
+	assets->torch[0] = open_img(game, "./textures/torch/torch_frame_1.xpm");
+	assets->torch[1] = open_img(game, "./textures/torch/torch_frame_2.xpm");
+	assets->torch[2] = open_img(game, "./textures/torch/torch_frame_3.xpm");
+	assets->torch[3] = open_img(game, "./textures/torch/torch_frame_4.xpm");
+	assets->torch[4] = open_img(game, "./textures/torch/torch_frame_5.xpm");
+}
+
 void	load_assets(t_game *game)
 {
 	t_assets	*assets;
@@ -102,7 +120,9 @@ void	load_assets(t_game *game)
 	assets = &game->assets;
 	assets->wall = open_img(game, "./textures/wall.xpm");
 	assets->player = open_img(game, "./textures/player.xpm");
-	assets->floor = open_img(game, "./textures/floor.xpm");
+	assets->floors[0] = open_img(game, "./textures/floor_1.xpm");
+	assets->floors[1] = open_img(game, "./textures/floor_2.xpm");
+	assets->floors[2] = open_img(game, "./textures/floor_3.xpm");
 	assets->doors[OPEN] = open_img(game, "./textures/door_opened.xpm");
 	assets->doors[CLOSED] = open_img(game, "./textures/door_closed.xpm");
 	assets->hearts[EMPTY] = open_img(game, "./textures/empty_heart.xpm");
@@ -110,4 +130,5 @@ void	load_assets(t_game *game)
 	load_numbers(game);
 	load_collectables(game);
 	load_enemy_frames(game);
+	load_torch_frames(game);
 }

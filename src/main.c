@@ -41,8 +41,8 @@ void	clear_program(t_game *game)
 
 	win = &game->win;
 	map = &game->map;
-	free_assets(game);
 	free_map(map);
+	free_assets(game);
 	mlx_destroy_window(win->mlx, win->win);
 	mlx_destroy_display(win->mlx);
 	free(win->mlx);
@@ -50,15 +50,18 @@ void	clear_program(t_game *game)
 
 int	game_loop(void *param)
 {
-	t_game		*game;
+	t_game	*game;
  
 	game = (t_game *) param;
 	game->frames.frame_count++;
+	if (game->frames.frame_count == 2147483647)
+		game->frames.frame_count = 0;
 	game->frames.real_frame = game->frames.frame_count / 1000;
 	if (game->frames.real_frame != game->frames.last_frame)
 	{
 		game->frames.last_frame = game->frames.real_frame;
 		draw_enemies(game);
+		draw_torches(game);
 	}
 	if (game->map.redraw == 1)
 	{
@@ -74,7 +77,7 @@ int	game_loop(void *param)
 
 void	init_frames(t_frames *frames)
 {
-	frames->frame_count = 1000;
+	frames->frame_count = 0;
 	frames->last_frame = 0;
 	frames->real_frame = 0;
 }
@@ -98,6 +101,7 @@ int	main(int argc, char *argv[])
 		draw_walls(&game);
 		mlx_loop_hook(game.win.mlx, game_loop, &game);
 		mlx_key_hook(game.win.win, on_key_press, &game);
+		mlx_hook(game.win.win, DestroyNotify, StructureNotifyMask, close_window, &game);
 		mlx_loop(game.win.mlx);
 		clear_program(&game);
 	}
