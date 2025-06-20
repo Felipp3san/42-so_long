@@ -14,57 +14,49 @@
 
 static int	is_enclosed_by_walls(t_map *map)
 {
-	int	all_1s;
 	int	i;
 
-	all_1s = 1;
 	i = 0;
 	while (i < map->columns)
 	{
-		if (map->map[0][i] != '1')
-			all_1s = 0;
-		if (map->map[map->rows - 1][i] != '1')
-			all_1s = 0;
+		if (map->map[0][i] != '1' || map->map[map->rows - 1][i] != '1')
+			return (0);
 		i++;
 	}
 	i = 0;
 	while (i < map->rows)
 	{
-		if (map->map[i][0] != '1')
-			all_1s = 0;
-		if (map->map[i][map->columns - 1] != '1')
-			all_1s = 0;
+		if (map->map[i][0] != '1' || map->map[i][map->columns - 1] != '1')
+			return (0);
 		i++;
 	}
-	return (all_1s);
+	return (1);
 }
 
-static int	exit_collectables_lookup(t_map *map, char **clone_map)
+static int	has_unreacheable_tiles(t_map *map, char **clone_map)
 {
-	int	found;
 	int	i;
 	int	j;
 
 	i = 0;
-	found = 0;
 	while (i < map->rows)
 	{
 		j = 0;
 		while (j < map->columns)
 		{
 			if (clone_map[i][j] == 'E' || clone_map[i][j] == 'C')
-				found = 1;
+				return (1);
 			j++;
 		}
 		i++;
 	}
-	return (found);
+	return (0);
 }
 
 static int	has_valid_path(t_map *map)
 {
 	int		i;
-	int		found;
+	int		unreachable_exist;
 	char	**clone_map;
 	t_point	start;
 
@@ -73,23 +65,41 @@ static int	has_valid_path(t_map *map)
 	if (!clone_map)
 		free_map_exit(map, "Failed to clone map.");
 	flood_fill(map, clone_map, start);
-	found = exit_collectables_lookup(map, clone_map);
+	unreachable_exist = has_unreacheable_tiles(map, clone_map);
 	i = 0;
 	while (i < map->rows)
 		free(clone_map[i++]);
 	free(clone_map);
-	if (!found)
-		return (1);
-	else
-		return (0);
+	return (!unreachable_exist);
+}
+
+static int	has_equal_rows(t_map *map)
+{
+	int		i;
+	size_t	row_size;
+
+	row_size = 0;
+	i = 0;
+	while (i < map->rows)
+	{
+		if (row_size == 0)
+			row_size = ft_strlen(map->map[i]);
+		else
+		{
+			if (row_size != ft_strlen(map->map[i]))
+				return (0);
+		}
+		i++;
+	}
+	return (1);
 }
 
 void	validate_map(t_map *map)
 {
 	if (map->rows == 0)
 		free_map_exit(map, "Map is empty.");
-	//if (map->rows >= map->columns)
-	//	free_map_exit(map, "Map is not rectangular.");
+	if (!has_equal_rows(map))
+		free_map_exit(map, "Map is not rectangular.");
 	if (map->exit_count > 1)
 		free_map_exit(map, "Map has more than 1 exit.");
 	if (map->exit_count == 0)
