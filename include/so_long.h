@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:27:16 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/20 23:08:17 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/21 00:08:13 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@
 # include "mlx_int.h"
 # include "libft.h"
 # include "mlx.h"
-# include <math.h>
 
 # define MALLOC_ERROR -1
-# define SUCCESS 0 
 
 // Window 
 # define NAME "So_long"
@@ -39,7 +37,7 @@
 // Assets
 # define FLOORS 3
 # define NUMBERS 10
-# define LETTERS 6
+# define LETTERS 9
 # define HEARTS 2
 # define DOORS 2
 
@@ -55,6 +53,19 @@ typedef enum e_game_state
 	WIN,
 	LOSE
 }	t_game_state;
+
+typedef enum e_letters
+{
+	E,
+	I,
+	L,
+	N,
+	O,
+	S,
+	U,
+	W,
+	Y
+}	e_letters;
 
 typedef enum e_direction
 {
@@ -124,6 +135,7 @@ typedef struct s_assets
 	t_img	*player;
 	t_img	*wall;
 	t_img	*skull;
+	t_img	*crown;
 	t_img	*floors[FLOORS];
 	t_img	*hearts[HEARTS];
 	t_img	*numbers[NUMBERS];
@@ -226,7 +238,8 @@ void	draw_enemies(t_game *game);
 // render_ui.c
 void	draw_hearts_ui(t_game *game);
 void	draw_movements_ui(t_game *game);
-void	draw_end(t_game *game);
+void	draw_lose(t_game *game);
+void	draw_win(t_game *game);
 
 // events.c
 int		close_window(void *param);

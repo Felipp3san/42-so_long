@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:28:01 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/20 23:26:14 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/21 00:08:18 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	init_win(t_game *game)
 		free(win->mlx);
 		return (MALLOC_ERROR);
 	}
-	return (SUCCESS);
+	return (0);
 }
 
 void	clear_program(t_game *game)
@@ -85,7 +85,7 @@ int	game_loop(void *param)
 			game->map.redraw = FALSE;
 		}
 	}
-	return (SUCCESS);
+	return (0);
 }
 
 void	init_frames(t_frames *frames)

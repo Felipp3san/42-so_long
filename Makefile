@@ -10,7 +10,7 @@ MLX			= libmlx.a
 
 # Includes & Links
 INCLUDE		= -I$(INCLUDE_DIR) -I$(LIBFT_DIR)/include -I/usr/include -I$(MLX_DIR)
-LINK		= -Llibft -lft -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11 -lm
+LINK		= -Llibft -lft -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
 
 # Folders
 INCLUDE_DIR = include
