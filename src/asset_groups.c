@@ -29,6 +29,19 @@ void	load_numbers(t_game *game)
 	assets->numbers[9] = open_img(game, "./textures/numbers/9.xpm");
 }
 
+void	load_letters(t_game *game)
+{
+	t_assets	*assets;
+
+	assets = &game->assets;
+	assets->letters[0] = open_img(game, "./textures/letters/y.xpm");
+	assets->letters[1] = open_img(game, "./textures/letters/o.xpm");
+	assets->letters[2] = open_img(game, "./textures/letters/u.xpm");
+	assets->letters[3] = open_img(game, "./textures/letters/l.xpm");
+	assets->letters[4] = open_img(game, "./textures/letters/s.xpm");
+	assets->letters[5] = open_img(game, "./textures/letters/e.xpm");
+}
+
 void	load_collectable_frames(t_game *game)
 {
 	t_assets	*assets;

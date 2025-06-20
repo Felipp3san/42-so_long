@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 15:39:13 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/19 18:45:41 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/20 23:09:17 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,35 @@ t_point	get_enemy_location(t_map *map, int start_row, int start_column)
 	return (location);
 }
 
+t_enemy	*find_enemy(t_game *game, t_point *location)
+{
+	int	i;
+
+	i = 0;
+	while (i < game->map.enemy_count)
+	{
+		if (game->enemies[i].location.row == location->row &&
+			game->enemies[i].location.column == location->column)
+			return (&game->enemies[i]);
+		i++;
+	}
+	return (NULL);
+}
+
+void	update_enemy_location(t_map *map, t_enemy *enemy, t_point *next)
+{
+	set_tile(map, next, 'X');
+	enemy->location = *next;
+}
+
+void	update_enemy_direction(t_enemy *enemy)
+{
+	if (enemy->next_direction == 3)
+		enemy->next_direction = 0;
+	else
+		enemy->next_direction++;
+}
+
 void	init_enemies(t_game *game)
 {
 	t_enemy	*enemies;
@@ -60,7 +89,7 @@ void	init_enemies(t_game *game)
 	while (i < game->map.enemy_count)
 	{
 		enemies[i].location = get_enemy_location(&game->map, row, column);
-		enemies[i].alive = 1;
+		enemies[i].alive = TRUE;
 		enemies[i].next_direction = i % 4;
 		row = enemies[i].location.row;
 		column = enemies[i].location.column + 1;

@@ -1,44 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   actions.c                                          :+:      :+:    :+:   */
+/*   movements.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 03:30:16 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/19 19:17:48 by fde-alme         ###   ########.fr       */
+/*   Created: 2025/06/20 22:33:15 by fde-alme          #+#    #+#             */
+/*   Updated: 2025/06/20 22:36:33 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	handle_interaction(t_game *game, t_point *next, t_point *previous)
-{
-	t_map		*map;
-	t_player	*player;
-	char		*next_tile;
-
-	map = &game->map;
-	player = &game->player;
-	next_tile = &map->map[next->row][next->column];
-	if (*next_tile == 'E' && map->door_state == CLOSED)
-		return ;
-	if (*next_tile == 'X' && player->lives > 0)
-		player->lives--;
-	if (*next_tile == 'C')
-	{
-		player->collectables++;
-		if (player->collectables == map->collectable_count)
-			map->door_state = OPEN;
-	}
-	*next_tile = 'P';
-	map->map[previous->row][previous->column] = '0';
-	map->redraw = 1;
-	player->move_count++;
-	player->location.row = next->row;
-	player->location.column = next->column;
-	ft_printf("Move count: %d\n", player->move_count);
-}
 
 void	move_up(t_game *game)
 {
@@ -54,7 +26,7 @@ void	move_up(t_game *game)
 	next.row = previous.row - 1;
 	next.column = previous.column;
 	if (map->map[next.row] && map->map[next.row][next.column] != '1')
-		handle_interaction(game, &next, &previous);
+		handle_player_movement(game, &next, &previous);
 }
 
 void	move_down(t_game *game)
@@ -71,7 +43,7 @@ void	move_down(t_game *game)
 	next.row = previous.row + 1;
 	next.column = previous.column;
 	if (map->map[next.row] && map->map[next.row][next.column] != '1')
-		handle_interaction(game, &next, &previous);
+		handle_player_movement(game, &next, &previous);
 }
 
 void	move_left(t_game *game)
@@ -88,7 +60,7 @@ void	move_left(t_game *game)
 	next.row = previous.row;
 	next.column = previous.column - 1;
 	if (map->map[next.row] && map->map[next.row][next.column] != '1')
-		handle_interaction(game, &next, &previous);
+		handle_player_movement(game, &next, &previous);
 }
 
 void	move_right(t_game *game)
@@ -105,5 +77,5 @@ void	move_right(t_game *game)
 	next.row = previous.row;
 	next.column = previous.column + 1;
 	if (map->map[next.row] && map->map[next.row][next.column] != '1')
-		handle_interaction(game, &next, &previous);
+		handle_player_movement(game, &next, &previous);
 }

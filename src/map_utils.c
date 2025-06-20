@@ -67,3 +67,8 @@ char	**ft_clone_map(t_map *map)
 	}
 	return (clone_map);
 }
+
+void	set_tile(t_map *map, t_point *location, char value)
+{
+	map->map[location->row][location->column] = value;
+}

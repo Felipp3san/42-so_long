@@ -18,7 +18,14 @@ static void	destroy_image_array(t_xvar *mlx, t_img **assets, int count)
 
 	i = 0;
 	while (i < count)
-		mlx_destroy_image(mlx, assets[i++]);
+	{
+		if (assets[i])
+		{
+			mlx_destroy_image(mlx, assets[i]);
+			assets[i] = NULL;
+		}
+		i++;
+	}
 }
 
 void	free_assets(t_game *game)
@@ -29,14 +36,43 @@ void	free_assets(t_game *game)
 	win = &game->win;
 	assets = &game->assets;
 	mlx_destroy_image(win->mlx, assets->wall);
+	mlx_destroy_image(win->mlx, assets->skull);
 	mlx_destroy_image(win->mlx, assets->player);
 	destroy_image_array(win->mlx, assets->floors, FLOORS);
 	destroy_image_array(win->mlx, assets->doors, DOORS);
 	destroy_image_array(win->mlx, assets->numbers, NUMBERS);
+	destroy_image_array(win->mlx, assets->letters, NUMBERS);
 	destroy_image_array(win->mlx, assets->collectables, FRAMES);
 	destroy_image_array(win->mlx, assets->hearts, HEARTS);
 	destroy_image_array(win->mlx, assets->enemy, FRAMES);
 	destroy_image_array(win->mlx, assets->torch, FRAMES);
+}
+
+static void	init_as_null(t_img **assets, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+		assets[i++] = NULL;
+}
+
+static void	init_assets(t_game *game)
+{
+	t_assets	*assets;
+
+	assets = &game->assets;
+	assets->wall = NULL;
+	assets->skull = NULL;
+	assets->player = NULL;
+	init_as_null(assets->floors, FLOORS);
+	init_as_null(assets->doors, DOORS);
+	init_as_null(assets->numbers, NUMBERS);
+	init_as_null(assets->letters, LETTERS);
+	init_as_null(assets->collectables, FRAMES);
+	init_as_null(assets->hearts, HEARTS);
+	init_as_null(assets->enemy, FRAMES);
+	init_as_null(assets->torch, FRAMES);
 }
 
 void	load_assets(t_game *game)
@@ -44,7 +80,9 @@ void	load_assets(t_game *game)
 	t_assets	*assets;
 
 	assets = &game->assets;
+	init_assets(game);
 	assets->wall = open_img(game, "./textures/wall.xpm");
+	assets->skull = open_img(game, "./textures/skull.xpm");
 	assets->player = open_img(game, "./textures/player.xpm");
 	assets->floors[0] = open_img(game, "./textures/floor_1.xpm");
 	assets->floors[1] = open_img(game, "./textures/floor_2.xpm");
@@ -54,6 +92,7 @@ void	load_assets(t_game *game)
 	assets->hearts[EMPTY] = open_img(game, "./textures/empty_heart.xpm");
 	assets->hearts[FILLED] = open_img(game, "./textures/filled_heart.xpm");
 	load_numbers(game);
+	load_letters(game);
 	load_collectable_frames(game);
 	load_enemy_frames(game);
 	load_torch_frames(game);

@@ -23,6 +23,15 @@ t_point	get_direction_offset(int dir)
 	return ((t_point){0, 1});
 }
 
+void	player_hits_enemy(t_game *game, t_enemy *enemy)
+{
+	if (game->player.lives > 0)
+		game->player.lives--;
+	enemy->alive = 0;
+	if (game->player.lives == 0)
+		game->game_state = LOSE;
+}
+
 void	handle_movement(t_game *game, int idx)
 {
 	t_enemy		*enemy;
@@ -39,28 +48,28 @@ void	handle_movement(t_game *game, int idx)
 	next_tile = &map->map[next.row][next.column];
 	if (*next_tile != 'E' && *next_tile != '1' && *next_tile != 'C')
 	{
-		map->map[enemy->location.row][enemy->location.column] = '0';
-		map->map[next.row][next.column] = 'X';
+		set_tile(map, &enemy->location, '0');
+		if (*next_tile == 'P')
+			player_hits_enemy(game, enemy);
+		else
+			update_enemy_location(map, enemy, next);
 		map->redraw = 1;
-		enemy->location = next;
 	}
-	if (enemy->next_direction == 3)
-		enemy->next_direction = 0;
-	else
-		enemy->next_direction++;
+	update_enemy_direction(enemy);
 	return ;
 }
 
 void	movement_enemies(t_game *game)
 {
-	t_map		*map;
-	int			i;
+	t_map	*map;
+	int		i;
 
 	map = &game->map;
 	i = 0;
 	while (i < map->enemy_count)
 	{
-		handle_movement(game, i);
+		if (game->enemies[i].alive == 1)
+			handle_movement(game, i);
 		i++;
 	}
 }

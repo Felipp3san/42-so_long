@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:27:16 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/20 00:41:59 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/20 23:08:17 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,6 @@
 
 // Lives
 # define MAX_LIVES 3 
-# define EMPTY 0
-# define FILLED 1
-
-// Objects
-# define OPEN 0
-# define CLOSED 1
 
 // Frames 
 # define MAX_FRAME 4294967290
@@ -45,14 +39,42 @@
 // Assets
 # define FLOORS 3
 # define NUMBERS 10
+# define LETTERS 6
 # define HEARTS 2
 # define DOORS 2
 
-// Movement
-# define UP 0  
-# define LEFT 1 
-# define DOWN 2 
-# define RIGHT 3
+typedef enum e_bool
+{
+	FALSE,
+	TRUE
+}	t_bool;
+
+typedef enum e_game_state
+{
+	RUNNING,
+	WIN,
+	LOSE
+}	t_game_state;
+
+typedef enum e_direction
+{
+	UP,
+	LEFT,
+	DOWN,
+	RIGHT
+}	t_direction;
+
+typedef enum e_door_state
+{
+	OPEN,
+	CLOSED
+}	t_door_state;
+
+typedef enum e_heart_state
+{
+	EMPTY,
+	FILLED
+}	t_heart_state;
 
 typedef struct s_point
 {
@@ -101,9 +123,11 @@ typedef struct s_assets
 {
 	t_img	*player;
 	t_img	*wall;
+	t_img	*skull;
 	t_img	*floors[FLOORS];
 	t_img	*hearts[HEARTS];
 	t_img	*numbers[NUMBERS];
+	t_img	*letters[LETTERS];
 	t_img	*collectables[FRAMES];
 	t_img	*enemy[FRAMES];
 	t_img	*torch[FRAMES];
@@ -125,6 +149,7 @@ typedef struct s_game
 	t_player	player;
 	t_enemy		*enemies;
 	t_assets	assets;
+	int			game_state;
 }	t_game;
 
 // main.c 
@@ -140,6 +165,7 @@ int		open_map(char *map_name);
 void	free_map(t_map *map);
 void	free_map_exit(t_map *map, char *error);
 char	**ft_clone_map(t_map *map);
+void	set_tile(t_map *map, t_point *location, char value);
 
 // map_validation.c
 void	validate_map(t_map *map);
@@ -147,13 +173,26 @@ void	validate_map(t_map *map);
 // flood_fill.c
 void	flood_fill(t_map *map, char **clone_map, t_point start);
 
+// movements.c
+void	move_up(t_game *game);
+void	move_right(t_game *game);
+void	move_left(t_game *game);
+void	move_down(t_game *game);
+
 // player.c 
 t_point	get_player_location(t_map *map);
+void	update_player_location(t_game *game, t_point *next, t_point *previous);
 void	init_player(t_game *game);
 
-// enemy.c 
+// player_movements.c
+void	handle_player_movement(t_game *game, t_point *next, t_point *previous);
+
+// enemy.c
 void	init_enemies(t_game *game);
 void	movement_enemies(t_game *game);
+void	update_enemy_direction(t_enemy *enemy);
+void	update_enemy_location(t_map *map, t_enemy *enemy, t_point *next);
+t_enemy	*find_enemy(t_game *game, t_point *location);
 
 // assets.c 
 void	free_assets(t_game *game);
@@ -161,6 +200,7 @@ void	load_assets(t_game *game);
 
 // asset_groups.c
 void	load_numbers(t_game *game);
+void	load_letters(t_game *game);
 void	load_collectable_frames(t_game *game);
 void	load_enemy_frames(t_game *game);
 void	load_torch_frames(t_game *game);
@@ -186,15 +226,10 @@ void	draw_enemies(t_game *game);
 // render_ui.c
 void	draw_hearts_ui(t_game *game);
 void	draw_movements_ui(t_game *game);
+void	draw_end(t_game *game);
 
 // events.c
 int		close_window(void *param);
 int		on_key_press(int key_code, void *param);
-
-// actions.c
-void	move_up(t_game *game);
-void	move_right(t_game *game);
-void	move_left(t_game *game);
-void	move_down(t_game *game);
 
 #endif

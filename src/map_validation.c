@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:14:45 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/20 00:47:47 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/20 23:13:03 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ static int	is_enclosed_by_walls(t_map *map)
 	while (i < map->columns)
 	{
 		if (map->map[0][i] != '1' || map->map[map->rows - 1][i] != '1')
-			return (0);
+			return (FALSE);
 		i++;
 	}
 	i = 0;
 	while (i < map->rows)
 	{
 		if (map->map[i][0] != '1' || map->map[i][map->columns - 1] != '1')
-			return (0);
+			return (FALSE);
 		i++;
 	}
-	return (1);
+	return (TRUE);
 }
 
 static int	has_unreacheable_tiles(t_map *map, char **clone_map)
@@ -45,12 +45,12 @@ static int	has_unreacheable_tiles(t_map *map, char **clone_map)
 		while (j < map->columns)
 		{
 			if (clone_map[i][j] == 'E' || clone_map[i][j] == 'C')
-				return (1);
+				return (TRUE);
 			j++;
 		}
 		i++;
 	}
-	return (0);
+	return (FALSE);
 }
 
 static int	has_valid_path(t_map *map)
@@ -87,11 +87,11 @@ static int	has_equal_rows(t_map *map)
 		else
 		{
 			if (row_size != ft_strlen(map->map[i]))
-				return (0);
+				return (FALSE);
 		}
 		i++;
 	}
-	return (1);
+	return (TRUE);
 }
 
 void	validate_map(t_map *map)

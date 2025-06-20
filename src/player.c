@@ -12,6 +12,15 @@
 
 #include "so_long.h"
 
+void	update_player_location(t_game *game, t_point *next, t_point *previous)
+{
+	set_tile(&game->map, previous, '0');
+	set_tile(&game->map, next, 'P');
+	game->player.location.row = next->row;
+	game->player.location.column = next->column;
+	game->player.move_count++;
+}
+
 t_point	get_player_location(t_map *map)
 {
 	t_point	location;
@@ -37,6 +46,12 @@ t_point	get_player_location(t_map *map)
 		row++;
 	}
 	return (location);
+}
+
+void	check_player_death(t_game *game)
+{
+	if (game->player.lives == 0)
+		game->game_state = LOSE;
 }
 
 void	init_player(t_game *game)
