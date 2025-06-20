@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:33:01 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/19 20:58:43 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/20 00:51:57 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	init_map(t_map *map, char *map_name)
 	map->redraw = 1;
 	map->collectable_count = 0;
 	map->enemy_count = 0;
+	map->exit_count = 0;
+	map->player_count = 0;
 	map->door_state = CLOSED;
 }
 
@@ -36,7 +38,7 @@ int	parse_map(t_map *map)
 	i = 0;
 	while (i < map->rows)
 	{
-		map->map[i] = (char *) malloc(map->columns);
+		map->map[i] = (char *) malloc(map->columns + 1);
 		if (!map->map[i])
 			return (free_map(map), MALLOC_ERROR);
 		line = get_next_line(map_fd);

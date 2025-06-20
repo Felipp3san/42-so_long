@@ -119,12 +119,12 @@ typedef struct s_frames
 
 typedef struct s_game
 {
-	t_frames		frames;
-	t_win			win;
-	t_map			map;
-	t_player		player;
-	t_enemy			*enemies;
-	t_assets		assets;
+	t_frames	frames;
+	t_win		win;
+	t_map		map;
+	t_player	player;
+	t_enemy		*enemies;
+	t_assets	assets;
 }	t_game;
 
 // main.c 
