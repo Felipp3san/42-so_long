@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 16:12:28 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 16:29:17 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/21 00:06:00 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,31 +52,78 @@ void	draw_movements_ui(t_game *game)
 	}
 }
 
-void	draw_end(t_game *game)
+int	char_to_letter_idx(char ch)
 {
-	int		draw_x;
-	int		draw_y;
-	int		lose_length;
+	if (ch == 'Y')
+		return (Y);
+	else if (ch == 'O')
+		return (O);
+	else if (ch == 'U')
+		return (U);
+	else if (ch == 'L')
+		return (L);
+	else if (ch == 'O')
+		return (O);
+	else if (ch == 'S')
+		return (S);
+	else if (ch == 'E')
+		return (E);
+	else if (ch == 'W')
+		return (W);
+	else if (ch == 'I')
+		return (I);
+	else if (ch == 'N')
+		return (N);
+	else
+		return (-1);
+}
 
-	lose_length = 8;
-	draw_x = (game->map.columns - lose_length) / 2 * TILE_WIDTH;
-	draw_y = game->map.rows / 2 * TILE_HEIGHT;
-	
+void	draw_win(t_game *game)
+{
+	const char	message[] = "YOU WIN";
+	int			draw_x;
+	int			draw_y;
+	int			idx;
+	int			i;
+
+	i = 0;
+	draw_x = ((game->win.width / 2) - ((TILE_WIDTH * 7) / 2));
+	draw_y = ((game->win.height / 2) - (TILE_HEIGHT / 2));
 	mlx_clear_window(game->win.mlx, game->win.win);
-	put_image(&game->win, game->assets.letters[0], draw_x, draw_y);
-	draw_x = draw_x + TILE_WIDTH;
-	put_image(&game->win, game->assets.letters[1], draw_x, draw_y);
-	draw_x = draw_x + TILE_WIDTH;
-	put_image(&game->win, game->assets.letters[2], draw_x, draw_y);
-	draw_x = draw_x + TILE_WIDTH * 2;
-	put_image(&game->win, game->assets.letters[3], draw_x, draw_y);
-	draw_x = draw_x + TILE_WIDTH;
-	put_image(&game->win, game->assets.letters[1], draw_x, draw_y);
-	draw_x = draw_x + TILE_WIDTH;
-	put_image(&game->win, game->assets.letters[4], draw_x, draw_y);
-	draw_x = draw_x + TILE_WIDTH;
-	put_image(&game->win, game->assets.letters[5], draw_x, draw_y);
-	draw_y = draw_y + 128;
-	draw_x = (game->map.columns - 1) / 2 * 64;
+	while (i < 7)
+	{
+		idx = char_to_letter_idx(message[i]);
+		if (idx != -1)
+			put_image(&game->win, game->assets.letters[idx], draw_x, draw_y);
+		draw_x = draw_x + TILE_WIDTH;
+		i++;
+	}
+	draw_y = draw_y + (TILE_HEIGHT * 2);
+	draw_x = ((game->win.width / 2) - ((TILE_WIDTH * 2) / 2));
+	put_image(&game->win, game->assets.crown, draw_x, draw_y);
+}
+
+void	draw_lose(t_game *game)
+{
+	const char	message[] = "YOU LOSE";
+	int			draw_x;
+	int			draw_y;
+	int			idx;
+	int			i;
+
+	i = 0;
+	draw_x = ((game->win.width / 2) - ((TILE_WIDTH * 8) / 2));
+	draw_y = ((game->win.height / 2) - (TILE_HEIGHT / 2));
+	mlx_clear_window(game->win.mlx, game->win.win);
+	while (i < 8)
+	{
+		idx = char_to_letter_idx(message[i]);
+		if (idx != -1)
+			put_image(&game->win, game->assets.letters[idx], draw_x, draw_y);
+		draw_x = draw_x + TILE_WIDTH;
+		i++;
+	}
+	draw_y = draw_y + (TILE_HEIGHT * 2);
+	draw_x = ((game->win.width / 2) - ((TILE_WIDTH * 2) / 2));
 	put_image(&game->win, game->assets.skull, draw_x, draw_y);
 }

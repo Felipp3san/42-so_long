@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:33:15 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/20 22:36:33 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/20 23:20:13 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	move_up(t_game *game)
 {
 	t_player	*player;
-	t_map		*map;
 	t_point		next;
 	t_point		previous;
+	t_map		*map;
 
 	map = &game->map;
 	player = &game->player;
@@ -32,9 +32,9 @@ void	move_up(t_game *game)
 void	move_down(t_game *game)
 {
 	t_player	*player;
-	t_map		*map;
 	t_point		next;
 	t_point		previous;
+	t_map		*map;
 
 	map = &game->map;
 	player = &game->player;
@@ -49,9 +49,9 @@ void	move_down(t_game *game)
 void	move_left(t_game *game)
 {
 	t_player	*player;
-	t_map		*map;
 	t_point		next;
 	t_point		previous;
+	t_map		*map;
 
 	map = &game->map;
 	player = &game->player;
@@ -66,9 +66,9 @@ void	move_left(t_game *game)
 void	move_right(t_game *game)
 {
 	t_player	*player;
-	t_map		*map;
 	t_point		next;
 	t_point		previous;
+	t_map		*map;
 
 	map = &game->map;
 	player = &game->player;

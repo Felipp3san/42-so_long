@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 15:39:13 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/20 23:09:17 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/21 00:06:18 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ t_enemy	*find_enemy(t_game *game, t_point *location)
 	i = 0;
 	while (i < game->map.enemy_count)
 	{
-		if (game->enemies[i].location.row == location->row &&
-			game->enemies[i].location.column == location->column)
+		if (game->enemies[i].location.row == location->row
+			&& game->enemies[i].location.column == location->column)
 			return (&game->enemies[i]);
 		i++;
 	}

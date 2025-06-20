@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:28:01 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/20 23:11:18 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/20 23:26:14 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,12 @@ int	game_loop(void *param)
 
 	game = (t_game *) param;
 	if (game->game_state != RUNNING)
-		draw_end(game);
+	{
+		if (game->game_state == LOSE)
+			draw_lose(game);
+		else
+			draw_win(game);
+	}
 	else
 	{
 		game->frames.frame_count++;
