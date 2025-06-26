@@ -54,6 +54,7 @@ void	handle_player_movement(t_game *game, t_point *next, t_point *previous)
 		return ;
 	else if (*next_tile == 'E' && map->door_state == OPEN)
 	{
+		game->player.move_count++;
 		game->game_state = WIN;
 		return ;
 	}
