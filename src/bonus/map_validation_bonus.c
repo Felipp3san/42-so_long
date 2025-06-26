@@ -106,10 +106,10 @@ t_bool	has_invalid_tiles(t_map *map)
 		column = 0;
 		while (column < map->columns)
 		{
-			tile = map->map[row][column]; 
-			if (tile != '0' && tile != '1' && tile != 'C' 
-				&& tile != 'E' && tile != 'P')
-					return (TRUE);
+			tile = map->map[row][column];
+			if (tile != '0' && tile != '1' && tile != 'C'
+				&& tile != 'E' && tile != 'P' && tile != 'X')
+				return (TRUE);
 			column++;
 		}
 		row++;

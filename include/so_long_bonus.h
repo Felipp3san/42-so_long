@@ -66,7 +66,7 @@ typedef enum e_letters
 	U,
 	W,
 	Y
-}	e_letters;
+}	t_letters;
 
 typedef enum e_direction
 {

@@ -71,5 +71,7 @@ int	main(int argc, char *argv[])
 		mlx_loop(game.win.mlx);
 		clear_program(&game);
 	}
+	else
+		ft_printf("Error\nUsage: ./so_long path/to/map\n");
 	return (EXIT_SUCCESS);
 }

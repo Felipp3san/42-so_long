@@ -93,23 +93,23 @@ void	extract_map_info(t_map *map)
 void	validate_map(t_map *map)
 {
 	if (map->rows == 0)
-		free_map_exit(map, "Map is empty.");
+		free_map_exit(map, "Map is empty");
 	if (!has_equal_rows(map))
-		free_map_exit(map, "Map is not rectangular.");
+		free_map_exit(map, "Map is not rectangular");
 	if (map->exit_count > 1)
-		free_map_exit(map, "Map has more than 1 exit.");
+		free_map_exit(map, "Map has more than 1 exit");
 	if (map->exit_count == 0)
-		free_map_exit(map, "Map has no exit.");
+		free_map_exit(map, "Map has no exit");
 	if (map->player_count > 1)
-		free_map_exit(map, "Map has more than 1 player.");
+		free_map_exit(map, "Map has more than 1 player");
 	if (map->player_count == 0)
-		free_map_exit(map, "Map has no player.");
+		free_map_exit(map, "Map has no player");
 	if (map->collectable_count < 1)
-		free_map_exit(map, "Map has no collectables.");
+		free_map_exit(map, "Map has no collectables");
 	if (!is_enclosed_by_walls(map))
-		free_map_exit(map, "Map is not enclosed by walls.");
+		free_map_exit(map, "Map is not enclosed by walls");
 	if (!has_valid_path(map))
-		free_map_exit(map, "Map has no valid path.");
+		free_map_exit(map, "Map has no valid path");
 	if (has_invalid_tiles(map))
-		free_map_exit(map, "Map is not valid.");
+		free_map_exit(map, "Map is not valid");
 }

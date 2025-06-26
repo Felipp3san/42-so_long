@@ -18,7 +18,11 @@ int	open_map(char *map_name)
 
 	fd = open(map_name, O_RDONLY);
 	if (fd == -1)
+	{
+		ft_printf("Error\n");
+		ft_printf("Failed to open map file\n");
 		exit(EXIT_FAILURE);
+	}
 	return (fd);
 }
 
@@ -40,7 +44,8 @@ void	free_map(t_map *map)
 void	free_map_exit(t_map *map, char *error)
 {
 	free_map(map);
-	ft_dprintf(2, "Error: %s\n", error);
+	ft_printf("Error\n");
+	ft_printf("%s\n", error);
 	exit(EXIT_FAILURE);
 }
 
