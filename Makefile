@@ -40,7 +40,7 @@ OBJS_BONUS	= $(SRCS_BONUS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 # Rules
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT) $(MLX)
+$(NAME): $(OBJS) $(LIBFT) $(MLX) 
 	@$(CC) $(CFLAGS) $(OBJS) $(LINK) -o $(NAME)
 	@printf "$(GREEN)$@ compiled! $(DEF_COLOR)\n"
 
@@ -52,7 +52,7 @@ $(MLX):
 	@printf "$(CYAN)Compiling minilibx... $< $(DEF_COLOR)\n"
 	@make -C $(MLX_DIR)
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDE_DIR)/so_long.h | $(BUILD_DIR)
 	@printf "$(YELLOW)Compiling: $< $(DEF_COLOR)\n"
 	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 

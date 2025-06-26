@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 16:12:28 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/21 00:06:00 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/21 01:23:17 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	draw_win(t_game *game)
 		draw_x = draw_x + TILE_WIDTH;
 		i++;
 	}
-	draw_y = draw_y + (TILE_HEIGHT * 2);
+	draw_y = draw_y + TILE_HEIGHT;
 	draw_x = ((game->win.width / 2) - ((TILE_WIDTH * 2) / 2));
 	put_image(&game->win, game->assets.crown, draw_x, draw_y);
 }
@@ -123,7 +123,7 @@ void	draw_lose(t_game *game)
 		draw_x = draw_x + TILE_WIDTH;
 		i++;
 	}
-	draw_y = draw_y + (TILE_HEIGHT * 2);
+	draw_y = draw_y + TILE_HEIGHT;
 	draw_x = ((game->win.width / 2) - ((TILE_WIDTH * 2) / 2));
 	put_image(&game->win, game->assets.skull, draw_x, draw_y);
 }

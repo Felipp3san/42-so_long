@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 21:00:02 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/20 23:10:53 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/21 00:29:35 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,20 @@
 
 void	draw_player(t_game *game)
 {
-	int	draw_x;
-	int	draw_y;
+	t_player	*player;
+	int			draw_x;
+	int			draw_y;
 
-	draw_x = game->player.location.column * TILE_WIDTH;
-	draw_y = game->player.location.row * TILE_HEIGHT;
-	put_image(&game->win, game->assets.player, draw_x, draw_y);
+	player = &game->player;
+	draw_x = player->location.column * TILE_WIDTH;
+	draw_y = player->location.row * TILE_HEIGHT;
+	if (player->hit == TRUE)
+	{
+		put_image(&game->win, game->assets.hit, draw_x, draw_y);
+		player->hit = FALSE;
+	}
+	else
+		put_image(&game->win, game->assets.player, draw_x, draw_y);
 }
 
 void	draw_enemies(t_game *game)

@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 23:07:37 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 17:44:04 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/21 00:11:22 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,16 @@ int	on_key_press(int key_code, void *param)
 		clear_program(game);
 		exit(EXIT_SUCCESS);
 	}
-	if (key_code == XK_W || key_code == XK_w)
-		move_up(game);
-	if (key_code == XK_A || key_code == XK_a)
-		move_left(game);
-	if (key_code == XK_S || key_code == XK_s)
-		move_down(game);
-	if (key_code == XK_D || key_code == XK_d)
-		move_right(game);
+	if (game->game_state == RUNNING)
+	{
+		if (key_code == XK_W || key_code == XK_w)
+			move_up(game);
+		if (key_code == XK_A || key_code == XK_a)
+			move_left(game);
+		if (key_code == XK_S || key_code == XK_s)
+			move_down(game);
+		if (key_code == XK_D || key_code == XK_d)
+			move_right(game);
+	}
 	return (0);
 }

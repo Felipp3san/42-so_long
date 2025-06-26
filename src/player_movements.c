@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:31:48 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/20 22:47:37 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/21 00:25:12 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ static void	player_hits_enemy(t_game *game, t_point *location)
 		return ;
 	enemy->alive = 0;
 	if (player->lives > 0)
+	{
 		player->lives--;
+		player->hit = TRUE;
+	}
 	if (player->lives == 0)
 		game->game_state = LOSE;
 }

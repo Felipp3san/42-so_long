@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 23:08:46 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/20 23:10:32 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/21 01:47:15 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,38 @@ void	draw_background(t_game *game)
 	}
 }
 
-void	draw_walls(t_game *game)
+static void	render_walls(t_game *game, int row, int column)
 {
 	t_map	*map;
 	int		draw_x;
 	int		draw_y;
+
+	draw_x = column * TILE_WIDTH;
+	draw_y = row * TILE_HEIGHT;
+	map = &game->map;
+	if ((row == 0 && map->map[row + 1][column] != '1')
+			|| (row == map->rows - 1 && map->map[row - 1][column] != '1'))
+	{
+		if (column != 0 && column % 3 == 0)
+			put_image(&game->win, game->assets.walls[1], draw_x, draw_y);
+		else
+			put_image(&game->win, game->assets.walls[0], draw_x, draw_y);
+	}
+	else if ((column == 0 && map->map[row][column + 1] != '1')
+		|| (column == map->columns - 1 && map->map[row][column - 1] != '1'))
+	{
+		if (row != 0 && row != map->rows - 1 && row % 3 == 0)
+			put_image(&game->win, game->assets.walls[1], draw_x, draw_y);
+		else
+			put_image(&game->win, game->assets.walls[0], draw_x, draw_y);
+	}
+	else
+		put_image(&game->win, game->assets.walls[0], draw_x, draw_y);
+}
+
+void	draw_walls(t_game *game)
+{
+	t_map	*map;
 	int		column;
 	int		row;
 
@@ -55,10 +82,8 @@ void	draw_walls(t_game *game)
 		column = 0;
 		while (column < map->columns)
 		{
-			draw_x = column * TILE_WIDTH;
-			draw_y = row * TILE_HEIGHT;
 			if (map->map[row][column] == '1')
-				put_image(&game->win, game->assets.wall, draw_x, draw_y);
+				render_walls(game, row, column);
 			column++;
 		}
 		row++;
@@ -91,11 +116,11 @@ void	draw_torches(t_game *game)
 
 void	draw_collectables(t_game *game)
 {
-	int		draw_x;
-	int		draw_y;
-	int		column;
-	int		row;
-	int		frame;
+	int	draw_x;
+	int	draw_y;
+	int	column;
+	int	row;
+	int	frame;
 
 	row = 0;
 	while (row < game->map.rows)
@@ -111,32 +136,6 @@ void	draw_collectables(t_game *game)
 				put_image(&game->win,
 					game->assets.collectables[frame], draw_x, draw_y);
 			}
-			column++;
-		}
-		row++;
-	}
-}
-
-void	draw_exit(t_game *game)
-{
-	t_map	*map;
-	int		draw_x;
-	int		draw_y;
-	int		column;
-	int		row;
-
-	map = &game->map;
-	row = 0;
-	while (row < map->rows)
-	{
-		column = 0;
-		while (column < map->columns)
-		{
-			draw_x = column * TILE_WIDTH;
-			draw_y = row * TILE_HEIGHT;
-			if (game->map.map[row][column] == 'E')
-				put_image(&game->win,
-					game->assets.doors[map->door_state], draw_x, draw_y);
 			column++;
 		}
 		row++;

@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 13:03:05 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/18 15:33:35 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/21 00:24:40 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,5 @@ void	init_player(t_game *game)
 	player->lives = MAX_LIVES;
 	player->collectables = 0;
 	player->move_count = 0;
+	player->hit = FALSE;
 }

@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 22:35:16 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/20 23:09:56 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/21 00:30:49 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,16 @@ static t_point	get_direction_offset(int dir)
 
 static void	enemy_hits_player(t_game *game, t_enemy *enemy)
 {
-	if (game->player.lives > 0)
-		game->player.lives--;
+	t_player	*player;
+
+	player = &game->player;
+	if (player->lives > 0)
+	{
+		player->lives--;
+		player->hit = TRUE;
+	}
 	enemy->alive = FALSE;
-	if (game->player.lives == 0)
+	if (player->lives == 0)
 		game->game_state = LOSE;
 }
 
@@ -61,7 +67,7 @@ static void	handle_enemy_movement(t_game *game, int idx)
 	return ;
 }
 
-void	movement_enemies(t_game *game)
+void	move_enemies(t_game *game)
 {
 	int	i;
 

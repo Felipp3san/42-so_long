@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:27:16 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/21 00:08:13 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/21 01:28:52 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define MENU_HEIGHT 64
 
 // Lives
-# define MAX_LIVES 3 
+# define MAX_LIVES 3
 
 // Frames 
 # define MAX_FRAME 4294967290
@@ -40,6 +40,7 @@
 # define LETTERS 9
 # define HEARTS 2
 # define DOORS 2
+# define WALLS 2
 
 typedef enum e_bool
 {
@@ -121,6 +122,7 @@ typedef struct s_player
 	int		lives;
 	int		collectables;
 	int		move_count;
+	int		hit;
 }	t_player;
 
 typedef struct s_enemy
@@ -133,9 +135,10 @@ typedef struct s_enemy
 typedef struct s_assets
 {
 	t_img	*player;
-	t_img	*wall;
 	t_img	*skull;
 	t_img	*crown;
+	t_img	*hit;
+	t_img	*walls[WALLS];
 	t_img	*floors[FLOORS];
 	t_img	*hearts[HEARTS];
 	t_img	*numbers[NUMBERS];
@@ -166,6 +169,9 @@ typedef struct s_game
 
 // main.c 
 void	clear_program(t_game *game);
+
+// game_loop.c
+int	game_loop(void *param);
 
 // map.c 
 void	init_map(t_map *map, char *map_name);
@@ -201,7 +207,7 @@ void	handle_player_movement(t_game *game, t_point *next, t_point *previous);
 
 // enemy.c
 void	init_enemies(t_game *game);
-void	movement_enemies(t_game *game);
+void	move_enemies(t_game *game);
 void	update_enemy_direction(t_enemy *enemy);
 void	update_enemy_location(t_map *map, t_enemy *enemy, t_point *next);
 t_enemy	*find_enemy(t_game *game, t_point *location);
@@ -228,7 +234,6 @@ int		get_random_idx(int column, int row);
 void	draw_background(t_game *game);
 void	draw_walls(t_game *game);
 void	draw_collectables(t_game *game);
-void	draw_exit(t_game *game);
 void	draw_torches(t_game *game);
 
 // render_entities.c

@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:33:01 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/20 00:51:57 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/21 00:08:58 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	parse_map(t_map *map)
 		i++;
 	}
 	close(map_fd);
-	return (SUCCESS);
+	return (0);
 }
 
 static void	count_map_tile(t_map *map, char tile)

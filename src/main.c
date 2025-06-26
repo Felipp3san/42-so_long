@@ -6,13 +6,28 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 21:28:01 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/21 00:08:18 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/21 01:11:03 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	init_win(t_game *game)
+void	clear_program(t_game *game)
+{
+	t_win	*win;
+	t_map	*map;
+
+	win = &game->win;
+	map = &game->map;
+	free(game->enemies);
+	free_map(map);
+	free_assets(game);
+	mlx_destroy_window(win->mlx, win->win);
+	mlx_destroy_display(win->mlx);
+	free(win->mlx);
+}
+
+static int	init_win(t_game *game)
 {
 	t_map	*map;
 	t_win	*win;
@@ -34,61 +49,7 @@ int	init_win(t_game *game)
 	return (0);
 }
 
-void	clear_program(t_game *game)
-{
-	t_win	*win;
-	t_map	*map;
-
-	win = &game->win;
-	map = &game->map;
-	free(game->enemies);
-	free_map(map);
-	free_assets(game);
-	mlx_destroy_window(win->mlx, win->win);
-	mlx_destroy_display(win->mlx);
-	free(win->mlx);
-}
-
-int	game_loop(void *param)
-{
-	t_game	*game;
-
-	game = (t_game *) param;
-	if (game->game_state != RUNNING)
-	{
-		if (game->game_state == LOSE)
-			draw_lose(game);
-		else
-			draw_win(game);
-	}
-	else
-	{
-		game->frames.frame_count++;
-		if (game->frames.frame_count >= MAX_FRAME)
-			game->frames.frame_count = 0;
-		game->frames.real_frame = game->frames.frame_count / ANIMATION_SPEED;
-		if (game->frames.real_frame != game->frames.last_frame)
-		{
-			game->frames.last_frame = game->frames.real_frame;
-			draw_enemies(game);
-			draw_torches(game);
-			draw_collectables(game);
-		}
-		if (game->frames.frame_count % MOVEMENT_SPEED == 0)
-			movement_enemies(game);
-		if (game->map.redraw == TRUE)
-		{
-			draw_background(game);
-			draw_player(game);
-			draw_hearts_ui(game);
-			draw_movements_ui(game);
-			game->map.redraw = FALSE;
-		}
-	}
-	return (0);
-}
-
-void	init_frames(t_frames *frames)
+static void	init_frames(t_frames *frames)
 {
 	frames->frame_count = 0;
 	frames->real_frame = 0;
@@ -108,12 +69,12 @@ int	main(int argc, char *argv[])
 		validate_map(&game.map);
 		if (init_win(&game) == MALLOC_ERROR)
 			return (free_map(&game.map), EXIT_FAILURE);
-		game.game_state = RUNNING;
 		init_frames(&game.frames);
 		init_player(&game);
 		init_enemies(&game);
 		load_assets(&game);
 		draw_walls(&game);
+		game.game_state = RUNNING;
 		mlx_loop_hook(game.win.mlx, game_loop, &game);
 		mlx_hook(game.win.win, 17, StructureNotifyMask, close_window, &game);
 		mlx_key_hook(game.win.win, on_key_press, &game);

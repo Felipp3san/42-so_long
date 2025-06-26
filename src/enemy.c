@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 15:39:13 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/06/21 00:06:18 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/06/21 01:13:20 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void	update_enemy_location(t_map *map, t_enemy *enemy, t_point *next)
 
 void	update_enemy_direction(t_enemy *enemy)
 {
-	if (enemy->next_direction == 3)
-		enemy->next_direction = 0;
+	if (enemy->next_direction == RIGHT)
+		enemy->next_direction = UP;
 	else
 		enemy->next_direction++;
 }
