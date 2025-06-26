@@ -36,6 +36,7 @@ void	handle_player_movement(t_game *game, t_point *next, t_point *previous)
 	else if (*next_tile == 'E' && map->door_state == OPEN)
 	{
 		game->player.move_count++;
+		ft_printf("Move count: %d\n", game->player.move_count);
 		game->game_state = WIN;
 		return ;
 	}

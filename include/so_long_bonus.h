@@ -26,7 +26,7 @@
 # define MENU_HEIGHT 64
 
 // Lives
-# define MAX_LIVES 3
+# define MAX_LIVES 1
 
 // Frames 
 # define MAX_FRAME 4294967290
