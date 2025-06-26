@@ -1,10 +1,11 @@
 # Variables
-CC			= gcc-13 
+CC			= cc
 RM			= rm -f
 CFLAGS		= -Wall -Wextra -Werror -g
 
 # Names
 NAME		= so_long
+NAME_BONUS	= so_long_bonus
 LIBFT		= libft.a
 MLX			= libmlx.a
 
@@ -13,11 +14,13 @@ INCLUDE		= -I$(INCLUDE_DIR) -I$(LIBFT_DIR)/include -I/usr/include -I$(MLX_DIR)
 LINK		= -Llibft -lft -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
 
 # Folders
-INCLUDE_DIR = include
-SRC_DIR		= src
-BUILD_DIR	= build
-MLX_DIR		= mlx
-LIBFT_DIR	= libft
+INCLUDE_DIR		= include
+SRC_DIR			= src
+MANDATORY_DIR	= mandatory
+BONUS_DIR		= bonus
+BUILD_DIR		= build
+MLX_DIR			= mlx
+LIBFT_DIR		= libft
 
 # Colors
 DEF_COLOR = \033[0;39m
@@ -31,17 +34,20 @@ CYAN = \033[0;96m
 WHITE = \033[0;97m
 
 # Files
-SRCS		= $(wildcard $(SRC_DIR)/*.c)
-# SRCS_BONUS	= $(SRC_DIR)/pipex_bonus.c $(SRC_DIR)/utils.c
-SRCS_BONUS	=
-OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
-OBJS_BONUS	= $(SRCS_BONUS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
+SRCS		= $(wildcard $(SRC_DIR)/$(MANDATORY_DIR)/*.c)
+SRCS_BONUS	= $(wildcard $(SRC_DIR)/$(BONUS_DIR)/*.c)
+OBJS		= $(SRCS:$(SRC_DIR)/$(MANDATORY_DIR)/%.c=$(BUILD_DIR)/$(MANDATORY_DIR)/%.o)
+OBJS_BONUS	= $(SRCS_BONUS:$(SRC_DIR)/$(BONUS_DIR)/%.c=$(BUILD_DIR)/$(BONUS_DIR)/%.o)
 
 # Rules
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT) $(MLX) 
 	@$(CC) $(CFLAGS) $(OBJS) $(LINK) -o $(NAME)
+	@printf "$(GREEN)$@ compiled! $(DEF_COLOR)\n"
+
+bonus: $(OBJS_BONUS) $(LIBFT) $(MLX)
+	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(LINK) -o $(NAME_BONUS)
 	@printf "$(GREEN)$@ compiled! $(DEF_COLOR)\n"
 
 $(LIBFT):
@@ -52,14 +58,22 @@ $(MLX):
 	@printf "$(CYAN)Compiling minilibx... $< $(DEF_COLOR)\n"
 	@make -C $(MLX_DIR)
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(INCLUDE_DIR)/so_long.h | $(BUILD_DIR)
+$(BUILD_DIR)/$(MANDATORY_DIR)/%.o: $(SRC_DIR)/$(MANDATORY_DIR)/%.c $(INCLUDE_DIR)/so_long.h | $(BUILD_DIR)/$(MANDATORY_DIR)
 	@printf "$(YELLOW)Compiling: $< $(DEF_COLOR)\n"
 	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
-$(BUILD_DIR):
+$(BUILD_DIR)/$(BONUS_DIR)/%.o: $(SRC_DIR)/$(BONUS_DIR)/%.c $(INCLUDE_DIR)/so_long_bonus.h | $(BUILD_DIR)/$(BONUS_DIR)
+	@printf "$(YELLOW)Compiling: $< $(DEF_COLOR)\n"
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+
+$(BUILD_DIR)/$(MANDATORY_DIR):
 	@printf "$(MAGENTA)Build dir not found. Creating...$(DEF_COLOR)\n"
-	@mkdir -p $(BUILD_DIR)
-	
+	@mkdir -p $@
+
+$(BUILD_DIR)/$(BONUS_DIR):
+	@printf "$(MAGENTA)Build dir not found. Creating...$(DEF_COLOR)\n"
+	@mkdir -p $@
+
 clean:
 	@rm -rf $(BUILD_DIR)
 	@make -C $(LIBFT_DIR) clean
@@ -68,6 +82,7 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
+	@rm -f $(NAME_BONUS)
 	@make -C $(LIBFT_DIR) fclean
 	@printf "$(GREEN)libft.a cleaned!$(DEF_COLOR)\n"
 	@printf "$(GREEN)$(NAME) binaries cleaned!$(DEF_COLOR)\n"

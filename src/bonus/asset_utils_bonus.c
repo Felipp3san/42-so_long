@@ -1,0 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   asset_utils_bonus.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/19 18:33:42 by fde-alme          #+#    #+#             */
+/*   Updated: 2025/06/26 12:30:21 by fde-alme         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long_bonus.h"
+
+t_img	*open_img(t_game *game, char *path)
+{
+	t_img	*img;
+	int		img_width;
+	int		img_height;
+
+	img = mlx_xpm_file_to_image(game->win.mlx, path, &img_width, &img_height);
+	if (!img)
+	{
+		perror("mlx_xpm_file_to_image failed");
+		clear_program(game);
+		exit(EXIT_FAILURE);
+	}
+	return (img);
+}
