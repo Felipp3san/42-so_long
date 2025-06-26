@@ -21,7 +21,8 @@ t_img	*open_img(t_game *game, char *path)
 	img = mlx_xpm_file_to_image(game->win.mlx, path, &img_width, &img_height);
 	if (!img)
 	{
-		perror("mlx_xpm_file_to_image failed");
+		ft_printf("Error\n");
+		ft_printf("mlx_xpm_file_to_image failed\n");
 		clear_program(game);
 		exit(EXIT_FAILURE);
 	}

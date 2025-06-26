@@ -35,10 +35,14 @@ void	free_assets(t_game *game)
 
 	win = &game->win;
 	assets = &game->assets;
-	mlx_destroy_image(win->mlx, assets->skull);
-	mlx_destroy_image(win->mlx, assets->crown);
-	mlx_destroy_image(win->mlx, assets->player);
-	mlx_destroy_image(win->mlx, assets->hit);
+	if (assets->skull)
+		mlx_destroy_image(win->mlx, assets->skull);
+	if (assets->crown)
+		mlx_destroy_image(win->mlx, assets->crown);
+	if (assets->player)
+		mlx_destroy_image(win->mlx, assets->player);
+	if (assets->hit)
+		mlx_destroy_image(win->mlx, assets->hit);
 	destroy_image_array(win->mlx, assets->walls, WALLS);
 	destroy_image_array(win->mlx, assets->floors, FLOORS);
 	destroy_image_array(win->mlx, assets->doors, DOORS);
