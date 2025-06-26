@@ -1,6 +1,6 @@
 [
  {
-  "directory": "/home/fde-alme/Documents/42-libft_mlx_base",
+  "directory": "/home/fde-alme/Documents/42-so_long",
   "arguments": [
    "cc",
    "-Wall",
@@ -12,10 +12,314 @@
    "-I/usr/include",
    "-Imlx",
    "-c",
-   "src/main.c",
+   "src/mandatory/asset_groups.c",
    "-o",
-   "build/main.o"
+   "build/mandatory/asset_groups.o"
   ],
-  "file": "src/main.c"
+  "file": "src/mandatory/asset_groups.c"
+ },
+ {
+  "directory": "/home/fde-alme/Documents/42-so_long",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft/include",
+   "-I/usr/include",
+   "-Imlx",
+   "-c",
+   "src/mandatory/assets.c",
+   "-o",
+   "build/mandatory/assets.o"
+  ],
+  "file": "src/mandatory/assets.c"
+ },
+ {
+  "directory": "/home/fde-alme/Documents/42-so_long",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft/include",
+   "-I/usr/include",
+   "-Imlx",
+   "-c",
+   "src/mandatory/asset_utils.c",
+   "-o",
+   "build/mandatory/asset_utils.o"
+  ],
+  "file": "src/mandatory/asset_utils.c"
+ },
+ {
+  "directory": "/home/fde-alme/Documents/42-so_long",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft/include",
+   "-I/usr/include",
+   "-Imlx",
+   "-c",
+   "src/mandatory/events.c",
+   "-o",
+   "build/mandatory/events.o"
+  ],
+  "file": "src/mandatory/events.c"
+ },
+ {
+  "directory": "/home/fde-alme/Documents/42-so_long",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft/include",
+   "-I/usr/include",
+   "-Imlx",
+   "-c",
+   "src/mandatory/flood_fill.c",
+   "-o",
+   "build/mandatory/flood_fill.o"
+  ],
+  "file": "src/mandatory/flood_fill.c"
+ },
+ {
+  "directory": "/home/fde-alme/Documents/42-so_long",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft/include",
+   "-I/usr/include",
+   "-Imlx",
+   "-c",
+   "src/mandatory/game_loop.c",
+   "-o",
+   "build/mandatory/game_loop.o"
+  ],
+  "file": "src/mandatory/game_loop.c"
+ },
+ {
+  "directory": "/home/fde-alme/Documents/42-so_long",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft/include",
+   "-I/usr/include",
+   "-Imlx",
+   "-c",
+   "src/mandatory/main.c",
+   "-o",
+   "build/mandatory/main.o"
+  ],
+  "file": "src/mandatory/main.c"
+ },
+ {
+  "directory": "/home/fde-alme/Documents/42-so_long",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft/include",
+   "-I/usr/include",
+   "-Imlx",
+   "-c",
+   "src/mandatory/map.c",
+   "-o",
+   "build/mandatory/map.o"
+  ],
+  "file": "src/mandatory/map.c"
+ },
+ {
+  "directory": "/home/fde-alme/Documents/42-so_long",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft/include",
+   "-I/usr/include",
+   "-Imlx",
+   "-c",
+   "src/mandatory/map_utils.c",
+   "-o",
+   "build/mandatory/map_utils.o"
+  ],
+  "file": "src/mandatory/map_utils.c"
+ },
+ {
+  "directory": "/home/fde-alme/Documents/42-so_long",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft/include",
+   "-I/usr/include",
+   "-Imlx",
+   "-c",
+   "src/mandatory/map_validation.c",
+   "-o",
+   "build/mandatory/map_validation.o"
+  ],
+  "file": "src/mandatory/map_validation.c"
+ },
+ {
+  "directory": "/home/fde-alme/Documents/42-so_long",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft/include",
+   "-I/usr/include",
+   "-Imlx",
+   "-c",
+   "src/mandatory/movements.c",
+   "-o",
+   "build/mandatory/movements.o"
+  ],
+  "file": "src/mandatory/movements.c"
+ },
+ {
+  "directory": "/home/fde-alme/Documents/42-so_long",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft/include",
+   "-I/usr/include",
+   "-Imlx",
+   "-c",
+   "src/mandatory/player.c",
+   "-o",
+   "build/mandatory/player.o"
+  ],
+  "file": "src/mandatory/player.c"
+ },
+ {
+  "directory": "/home/fde-alme/Documents/42-so_long",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft/include",
+   "-I/usr/include",
+   "-Imlx",
+   "-c",
+   "src/mandatory/player_movements.c",
+   "-o",
+   "build/mandatory/player_movements.o"
+  ],
+  "file": "src/mandatory/player_movements.c"
+ },
+ {
+  "directory": "/home/fde-alme/Documents/42-so_long",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft/include",
+   "-I/usr/include",
+   "-Imlx",
+   "-c",
+   "src/mandatory/render_entities.c",
+   "-o",
+   "build/mandatory/render_entities.o"
+  ],
+  "file": "src/mandatory/render_entities.c"
+ },
+ {
+  "directory": "/home/fde-alme/Documents/42-so_long",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft/include",
+   "-I/usr/include",
+   "-Imlx",
+   "-c",
+   "src/mandatory/render_map.c",
+   "-o",
+   "build/mandatory/render_map.o"
+  ],
+  "file": "src/mandatory/render_map.c"
+ },
+ {
+  "directory": "/home/fde-alme/Documents/42-so_long",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft/include",
+   "-I/usr/include",
+   "-Imlx",
+   "-c",
+   "src/mandatory/render_ui.c",
+   "-o",
+   "build/mandatory/render_ui.o"
+  ],
+  "file": "src/mandatory/render_ui.c"
+ },
+ {
+  "directory": "/home/fde-alme/Documents/42-so_long",
+  "arguments": [
+   "cc",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft/include",
+   "-I/usr/include",
+   "-Imlx",
+   "-c",
+   "src/mandatory/render_utils.c",
+   "-o",
+   "build/mandatory/render_utils.o"
+  ],
+  "file": "src/mandatory/render_utils.c"
  }
 ]

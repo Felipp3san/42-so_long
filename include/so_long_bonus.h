@@ -177,6 +177,7 @@ int		game_loop(void *param);
 void	init_map(t_map *map, char *map_name);
 int		parse_map(t_map *map);
 void	extract_map_info(t_map *map);
+void	validate_map(t_map *map);
 
 // map_utils_bonus.c
 int		open_map(char *map_name);
@@ -186,7 +187,10 @@ char	**ft_clone_map(t_map *map);
 void	set_tile(t_map *map, t_point *location, char value);
 
 // map_validation_bonus.c
-void	validate_map(t_map *map);
+t_bool	has_invalid_tiles(t_map *map);
+t_bool	has_equal_rows(t_map *map);
+t_bool	has_valid_path(t_map *map);
+t_bool	is_enclosed_by_walls(t_map *map);
 
 // flood_fill_bonus.c
 void	flood_fill(t_map *map, char **clone_map, t_point start);

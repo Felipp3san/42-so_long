@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-static int	is_enclosed_by_walls(t_map *map)
+t_bool	is_enclosed_by_walls(t_map *map)
 {
 	int	i;
 
@@ -33,7 +33,7 @@ static int	is_enclosed_by_walls(t_map *map)
 	return (TRUE);
 }
 
-static int	has_unreacheable_tiles(t_map *map, char **clone_map)
+static t_bool	has_unreacheable_tiles(t_map *map, char **clone_map)
 {
 	int	i;
 	int	j;
@@ -53,7 +53,7 @@ static int	has_unreacheable_tiles(t_map *map, char **clone_map)
 	return (FALSE);
 }
 
-static int	has_valid_path(t_map *map)
+t_bool	has_valid_path(t_map *map)
 {
 	int		i;
 	int		unreachable_exist;
@@ -73,7 +73,7 @@ static int	has_valid_path(t_map *map)
 	return (!unreachable_exist);
 }
 
-static int	has_equal_rows(t_map *map)
+t_bool	has_equal_rows(t_map *map)
 {
 	int		i;
 	size_t	row_size;
@@ -94,24 +94,25 @@ static int	has_equal_rows(t_map *map)
 	return (TRUE);
 }
 
-void	validate_map(t_map *map)
+t_bool	has_invalid_tiles(t_map *map)
 {
-	if (map->rows == 0)
-		free_map_exit(map, "Map is empty.");
-	if (!has_equal_rows(map))
-		free_map_exit(map, "Map is not rectangular.");
-	if (map->exit_count > 1)
-		free_map_exit(map, "Map has more than 1 exit.");
-	if (map->exit_count == 0)
-		free_map_exit(map, "Map has no exit.");
-	if (map->player_count > 1)
-		free_map_exit(map, "Map has more than 1 player.");
-	if (map->player_count == 0)
-		free_map_exit(map, "Map has no player.");
-	if (map->collectable_count < 1)
-		free_map_exit(map, "Map has no collectables.");
-	if (!is_enclosed_by_walls(map))
-		free_map_exit(map, "Map is not enclosed by walls.");
-	if (!has_valid_path(map))
-		free_map_exit(map, "Map has no valid path.");
+	int		row;
+	int		column;
+	char	tile;
+
+	row = 0;
+	while (row < map->rows)
+	{
+		column = 0;
+		while (column < map->columns)
+		{
+			tile = map->map[row][column]; 
+			if (tile != '0' && tile != '1' && tile != 'C' 
+				&& tile != 'E' && tile != 'P')
+					return (TRUE);
+			column++;
+		}
+		row++;
+	}
+	return (FALSE);
 }
