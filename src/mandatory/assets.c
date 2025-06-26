@@ -46,7 +46,6 @@ void	free_assets(t_game *game)
 	destroy_image_array(win->mlx, assets->walls, WALLS);
 	destroy_image_array(win->mlx, assets->floors, FLOORS);
 	destroy_image_array(win->mlx, assets->doors, DOORS);
-	destroy_image_array(win->mlx, assets->numbers, NUMBERS);
 	destroy_image_array(win->mlx, assets->letters, LETTERS);
 }
 
@@ -71,7 +70,6 @@ static void	init_assets(t_game *game)
 	init_as_null(assets->walls, WALLS);
 	init_as_null(assets->floors, FLOORS);
 	init_as_null(assets->doors, DOORS);
-	init_as_null(assets->numbers, NUMBERS);
 	init_as_null(assets->letters, LETTERS);
 }
 
@@ -92,6 +90,5 @@ void	load_assets(t_game *game)
 	assets->doors[CLOSED] = open_img(game, "./textures/door_closed.xpm");
 	assets->collectable = open_img(game, "./textures/collect_frame_1.xpm");
 	assets->torch = open_img(game, "./textures/torch/torch_frame_1.xpm");
-	load_numbers(game);
 	load_letters(game);
 }

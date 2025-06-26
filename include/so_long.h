@@ -26,7 +26,6 @@
 
 // Assets
 # define FLOORS 3
-# define NUMBERS 10
 # define LETTERS 6
 # define DOORS 2
 # define WALLS 2
@@ -115,7 +114,6 @@ typedef struct s_assets
 	t_img	*torch;
 	t_img	*walls[WALLS];
 	t_img	*floors[FLOORS];
-	t_img	*numbers[NUMBERS];
 	t_img	*letters[LETTERS];
 	t_img	*doors[DOORS];
 }	t_assets;
@@ -176,7 +174,6 @@ void	free_assets(t_game *game);
 void	load_assets(t_game *game);
 
 // asset_groups.c
-void	load_numbers(t_game *game);
 void	load_letters(t_game *game);
 
 // asset_utils.c

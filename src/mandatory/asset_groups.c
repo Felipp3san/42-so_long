@@ -12,23 +12,6 @@
 
 #include "so_long.h"
 
-void	load_numbers(t_game *game)
-{
-	t_assets	*assets;
-
-	assets = &game->assets;
-	assets->numbers[0] = open_img(game, "./textures/numbers/0.xpm");
-	assets->numbers[1] = open_img(game, "./textures/numbers/1.xpm");
-	assets->numbers[2] = open_img(game, "./textures/numbers/2.xpm");
-	assets->numbers[3] = open_img(game, "./textures/numbers/3.xpm");
-	assets->numbers[4] = open_img(game, "./textures/numbers/4.xpm");
-	assets->numbers[5] = open_img(game, "./textures/numbers/5.xpm");
-	assets->numbers[6] = open_img(game, "./textures/numbers/6.xpm");
-	assets->numbers[7] = open_img(game, "./textures/numbers/7.xpm");
-	assets->numbers[8] = open_img(game, "./textures/numbers/8.xpm");
-	assets->numbers[9] = open_img(game, "./textures/numbers/9.xpm");
-}
-
 void	load_letters(t_game *game)
 {
 	t_assets	*assets;
