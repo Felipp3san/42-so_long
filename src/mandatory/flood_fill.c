@@ -17,6 +17,11 @@ static void	dfs(t_map *map, char **clone_map, int row, int column)
 	if (row < 0 || column < 0 || column == map->columns - 1
 		|| row == map->rows - 1 || clone_map[row][column] == '1')
 		return ;
+	if (clone_map[row][column] == 'E')
+	{
+		clone_map[row][column] = '1';
+		return ;
+	}
 	clone_map[row][column] = '1';
 	dfs(map, clone_map, row + 1, column);
 	dfs(map, clone_map, row - 1, column);
