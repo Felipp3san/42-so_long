@@ -27,6 +27,19 @@ void	clear_program(t_game *game)
 	free(win->mlx);
 }
 
+void	copy_line(char *dest, const char *src)
+{
+	int	j;
+
+	j = 0;
+	while (src[j] != '\0' && src[j] != '\n')
+	{
+		dest[j] = src[j];
+		j++;
+	}
+	dest[j] = '\0';
+}
+
 static int	init_win(t_game *game)
 {
 	t_map	*map;

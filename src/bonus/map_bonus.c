@@ -14,6 +14,15 @@
 
 void	init_map(t_map *map, char *map_name)
 {
+	char	*ext;
+
+	ext = ft_strrchr(map_name, '.');
+	if (!ext || ft_strcmp(".ber", ext) != 0
+		|| ft_strlen(map_name) == ft_strlen(ext) || *(ext - 1) == '/')
+	{
+		ft_printf("Error\nWrong extension\n");
+		exit(EXIT_FAILURE);
+	}
 	map->name = map_name;
 	map->rows = 0;
 	map->columns = 0;
@@ -42,11 +51,10 @@ int	parse_map(t_map *map)
 		if (!map->map[i])
 			return (free_map(map), MALLOC_ERROR);
 		line = get_next_line(map_fd);
-		if (line)
-		{
-			ft_strlcpy(map->map[i], line, ft_strlen(line));
-			free(line);
-		}
+		if (!line)
+			return (free_map(map), MALLOC_ERROR);
+		copy_line(map->map[i], line);
+		free(line);
 		i++;
 	}
 	close(map_fd);
@@ -94,8 +102,6 @@ void	validate_map(t_map *map)
 {
 	if (map->rows == 0)
 		free_map_exit(map, "Map is empty");
-	if (!has_equal_rows(map))
-		free_map_exit(map, "Map is not rectangular");
 	if (map->exit_count > 1)
 		free_map_exit(map, "Map has more than 1 exit");
 	if (map->exit_count == 0)
@@ -106,6 +112,8 @@ void	validate_map(t_map *map)
 		free_map_exit(map, "Map has no player");
 	if (map->collectable_count < 1)
 		free_map_exit(map, "Map has no collectables");
+	if (!has_equal_rows(map))
+		free_map_exit(map, "Map is not rectangular");
 	if (!is_enclosed_by_walls(map))
 		free_map_exit(map, "Map is not enclosed by walls");
 	if (!has_valid_path(map))

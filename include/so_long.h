@@ -129,6 +129,7 @@ typedef struct s_game
 
 // main.c 
 void	clear_program(t_game *game);
+void	copy_line(char *dest, const char *src);
 
 // game_loop.c
 int		game_loop(void *param);
