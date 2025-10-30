@@ -22,10 +22,19 @@ The project focuses on **graphics programming**, **event handling**, and **map v
 
 ## Tech Stack
 
-- **C** – Core language  
-- **MiniLibX** – Rendering and event handling  
-- **Libft** – Utility functions  
-- **Makefile** – Build and management  
+- **C** – Core language
+- **MiniLibX** – Rendering and event handling
+- **Libft** – Utility functions
+- **Makefile** – Build and management
+
+## Dependencies
+
+- **GCC 11** – Required compiler
+> [!IMPORTANT]
+> The project will not compile with GCC > 11
+- **X11 libraries** – For graphics on Linux
+- **MiniLibX** – Already included in repo
+- **Libft** – Already included in repo
 
 ## Installation
 
