@@ -133,7 +133,7 @@ make re
 ```
 .
 ├── include/           # Header files
-├── src/
+├── src/               # Source files
 │   ├── mandatory/     # Core game source files
 │   └── bonus/         # Bonus version source files
 ├── libft/             # Custom Libft library
