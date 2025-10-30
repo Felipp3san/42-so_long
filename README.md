@@ -138,7 +138,7 @@ make re
 │   └── bonus/         # Bonus version source files
 ├── libft/             # Custom Libft library
 ├── mlx/               # MiniLibX library
-├── build/             # Object files
+├── build/             # Object files (created after compilation)
 └── maps/              # Example map files
 ```
 
