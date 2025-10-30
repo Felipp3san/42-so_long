@@ -48,7 +48,7 @@ make bonus    # Compile bonus version
 ### Run the game
 
 ```bash
-./so_long maps/map.ber
+./so_long maps/maps_with_no_enemies/valid_map.ber
 ```
 
 - The `.ber` map file defines the layout of the game.
@@ -58,15 +58,15 @@ make bonus    # Compile bonus version
 ### Example
 
 ```bash
-./so_long maps/level1.ber
+./so_long maps/maps_with_no_enemies/valid_map.ber
 ```
 
-This loads the map `level1.ber` and starts the game.
+This loads the map `valid_map.ber` and starts the game.
 
 ### Bonus
 
 ```bash
-./so_long_bonus maps/map_bonus.ber
+./so_long_bonus ./maps/maps_with_enemies/map_20x10_enemies.ber
 ```
 
 Runs the bonus version with enemies, animations, and additional features.
